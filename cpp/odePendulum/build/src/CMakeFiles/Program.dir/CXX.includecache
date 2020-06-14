@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sam/cpp/odeint/src/main.cpp
+boost/numeric/odeint.hpp
+-
+vector
+-
+eigen3/Eigen/Core
+-
+

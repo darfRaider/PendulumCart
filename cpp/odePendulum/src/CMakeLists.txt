@@ -1,0 +1,6 @@
+include_directories(${TestProject_SOURCE_DIR}/include})
+find_package(Boost)
+message(STATUS "LOL = " ${Boost_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
+add_executable(Program main.cpp)
+target_link_libraries(Program ${Boost_INCLUDE_DIRS})
