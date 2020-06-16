@@ -1,7 +1,12 @@
 #include <boost/numeric/odeint.hpp>
 #include <vector>
 #include <eigen3/Eigen/Core>
-
+#include <qt5/QtCore/qglobal.h>
+#include <qt5/QtCore/qnamespace.h>
+#include <qt5/QtGui/qpainter.h>
+#include <QtWidgets/QtWidgets>
+#include "Pendulum2d.hpp"
+#include "IntegratorSimpleStep.hpp"
 //typedef Eigen::Vector4d Vector;
 typedef std::vector<double> Vector;
 
@@ -20,28 +25,44 @@ double u = 0.0;
 using namespace boost::numeric::odeint;
 
 int main() {
+  Pendulum2d::Vector x0 = {0, 0, 0.25, 0};
+  Pendulum2d* p = new Pendulum2d(1,2,3);
+  p->setInitialCondition(x0);
+  IntegratorSimpleStep<Pendulum2d::Vector,Pendulum2d> integrator = IntegratorSimpleStep<std::vector<double>, Pendulum2d>(p);
+  std::vector<Pendulum2d::Vector>* res;
+  std::cout << "Before int" << std::endl;
+  integrator.integrate(res, p);
+  std::cout << "After int" << std::endl;
+  //integrator.SomeMethod();
   Vector x(4);
   x[0] = 0;
   x[1] = 0;
   x[2] = -0.25;
   x[3] = 0;
   runge_kutta4< Vector > stepper;
-  //integrate_const( stepper , dfdt , x , 0.0 , 10.0 , 0.01 );
+//  integrate_const( stepper , dfdt , x , 0.0 , 10.0 , 0.01 );
   const double dt = 0.001;
   std::cout << "t = " << 0 << ", " << x[0] << ", " << x[1] << ", " << x[2] << ", "  << x[3] << std::endl;
   double e0 = sumE(x);
   double e1;
-  for( double t=0.0 ; t<10000 ; t+= dt ){
+  for( double t=0.0 ; t<10 ; t+= dt ){
     stepper.do_step( dfdt , x , t , dt);
-    e1 = sumE(x);
-//    if((int)t%100)
-    //std::cout << "t = " << t << "Epot = " << ePot(x) << ", Ekin = " << eKin(x) << ", sum = " << sumE(x) << ", delta = " <<  e0-e1 << std::endl;
-      //      std::cout << "t = " << t << ", " << x[0] << ", " << x[1] << ", " << x[2] << ", "  << x[3] << std::endl;
-//  }
   }
+  e1 = sumE(x);
   std::cout << "Epot = " << ePot(x) << ", Ekin = " << eKin(x) << ", sum = " << sumE(x) << ", delta = " <<  e0-e1 << std::endl;
 
-  std::cout << "done" << std::endl;
+  std::cout << "done..." << std::endl;
+  char** test = new char*();
+
+  int te = 1;
+  QApplication qa(te,test);
+  QWidget w;
+  w.show();
+  QPainter painter;
+  painter.setPen(Qt::blue);
+  //painter.setFont(QFont("Arial", 30));
+  //painter.drawText(rect(), Qt::AlignCenter, "Qt");
+  painter.fillRect(0, 0, 100, 100, Qt::white);
   return 0;
 }
 
