@@ -10,23 +10,21 @@
 #include <iostream>
 #include <boost/numeric/odeint.hpp>
 
-//typedef typename std::vector<double> Vector;
-
 template<typename Vector, typename System>
 class Integrator {
-    public:
-        Integrator();
-        virtual ~Integrator();
-        virtual double SomeMethod () = 0;  // This method is not implemented in the base class, making it a pure virtual method. Subclasses must implement it
-        virtual void integrate(std::vector<Vector> *vec, System* system) = 0;
- };
+	public:
+		Integrator();
+    virtual ~Integrator();
+    virtual double SomeMethod () = 0;  // This method is not implemented in the base class, making it a pure virtual method. Subclasses must implement it
+    virtual void integrate(std::vector<Vector> *vec) = 0;
+};
 
 template <typename Vector, typename System>
 Integrator<Vector, System>::Integrator() {
-
 }
+
 template <typename Vector, typename System>
 Integrator<Vector, System>::~Integrator() {
-  // TODO Auto-generated destructor stub
 }
+
 #endif /* INCLUDE_INTEGRATOR_HPP_ */
