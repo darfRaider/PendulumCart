@@ -48,19 +48,16 @@ void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> *vec){
   Vector x0;
   sys->getInitialCondition(x0);
   sys->print();
-	double tMax = sys->getEndTime();
-
-	
-  //static std::function<void(const Vector&, Vector&, const double)> F = [&](const Vector& x, Vector& res, const double t){
+  double tMax = sys->getEndTime();
   auto F = [&](const Vector& x, Vector& res, const double t){
     sys->dfdt(x, res, t);
   };
 	
-	std::cout << "Integrating from 0 to " << tMax << " seconds.." << std::endl;
-  
-	for( double t=0.0 ; t<tMax ; t+= timestep){
-    stepper.do_step(F , x0 , t , timestep);
-    (*vec).push_back(x0);
+  std::cout << "Integrating from 0 to " << tMax << " seconds.." << std::endl;
+
+  for( double t=0.0 ; t<tMax ; t+= timestep){
+	stepper.do_step(F , x0 , t , timestep);
+	(*vec).push_back(x0);
   }
 }
 
