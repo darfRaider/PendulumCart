@@ -12,7 +12,7 @@ Pendulum2d::Pendulum2d(const double m, const double M, const double L, const dou
   m(m),
   M(M),
   L(L),
-	Ts(Ts)
+  Ts(Ts)
 { }
 
 Pendulum2d::~Pendulum2d() { }
@@ -36,11 +36,11 @@ void Pendulum2d::setInitialCondition(TState &x0){
 }
 
 void Pendulum2d::setInputSequence(std::vector<TInput> seq){
-	this->inputSequence = seq;
+  this->inputSequence = seq;
 }
 
 double Pendulum2d::getEndTime(){
-	return inputSequence.size()*Ts;
+  return inputSequence.size()*Ts;
 }
 
 void Pendulum2d::print(){
@@ -65,5 +65,5 @@ double Pendulum2d::eKin(TState x){
 
 Pendulum2d::TInput Pendulum2d::getInput(double t){
   int k = (int) t/Ts;
-	return inputSequence[k];
+  return inputSequence[k];
 }

@@ -22,21 +22,21 @@ double u = 0.0;
 
 using namespace boost::numeric::odeint;
 int main() {
-	std::vector<TInput> inputs;	
-	for(int j = 0; j<100; j++){
-		inputs.push_back(0);
-	}
+  std::vector<TInput> inputs;	
+  for(int j = 0; j<100; j++){
+    inputs.push_back(0);
+  }
   Pendulum2d::TState x0 = {0, 0, 0.25, 0};
   Pendulum2d* system = new Pendulum2d(m, M, L, Ts);
   system->setInitialCondition(x0);
-	system->setInputSequence(inputs);
+  system->setInputSequence(inputs);
 
-	TIntegrator integrator = TIntegrator(system,timestep);
+  TIntegrator integrator = TIntegrator(system,timestep);
   std::vector<Pendulum2d::TState>* res = new std::vector<Pendulum2d::TState>;
 
-	integrator.integrate(res);
+  integrator.integrate(res);
   
-	std::cout << "Program ended..." << std::endl;
+  std::cout << "Program ended..." << std::endl;
 //  char** test = new char*();
 //
 //  int te = 1;
