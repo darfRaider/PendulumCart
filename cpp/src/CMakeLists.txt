@@ -1,0 +1,8 @@
+include_directories(${DynSim_SOURCE_DIR}/include)
+
+find_package(Boost)
+include_directories(${Boost_INCLUDE_DIRS})
+
+add_subdirectory(mechanical)
+add_subdirectory(math)
+
