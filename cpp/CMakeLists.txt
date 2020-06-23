@@ -7,16 +7,19 @@ project(DynSim)
 
 enable_testing()
 find_package(GTest REQUIRED)
+find_package(Qt5 COMPONENTS Widgets)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 include_directories(src/mechanical/include
-					src/math/include)
+					src/math/include
+					src/gui/include)
 add_subdirectory(src)
 add_subdirectory(test)
 
 add_executable(DynSim src/main.cpp)
 add_executable(Test test/main.cpp)
+add_executable(Gui src/gui/src/main.cpp)
 
 set_target_properties( DynSim Test
     PROPERTIES
@@ -26,3 +29,4 @@ set_target_properties( DynSim Test
 )
 target_link_libraries(Test GTest::GTest GTest::Main)
 target_link_libraries(DynSim mechanical math)
+target_link_libraries(Gui gui Qt5::Widgets)

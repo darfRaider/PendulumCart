@@ -1,9 +1,8 @@
-cmake_minimum_required(VERSION 3.5.1)
-set(CMAKE_CXX_STANDARD 11)
-project(PhysicsGUI)
-#add_compile_options(-fPIC)
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -std=c++11")
+find_package(Qt5 COMPONENTS Widgets)
+include_directories(include
+					${Qt5Widgets_INCLUDE_DIRS})
+add_library(gui STATIC
+  src/GUI.cpp
+)
 
-add_subdirectory(src)
-
-
+target_compile_options(gui PRIVATE -fPIC)

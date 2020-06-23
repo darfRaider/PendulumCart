@@ -5,4 +5,4 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 add_subdirectory(mechanical)
 add_subdirectory(math)
-
+add_subdirectory(gui)

@@ -2,11 +2,6 @@
 #include <vector>
 #include <math.h>
 #include <iostream>
-//#include <eigen3/Eigen/Core>
-//#include <qt5/QtCore/qglobal.h>
-//#include <qt5/QtCore/qnamespace.h>
-//#include <qt5/QtGui/qpainter.h>
-//#include <QtWidgets/QtWidgets>
 #include "Pendulum2d.hpp"
 #include "IntegratorSimpleStep.hpp"
 
@@ -35,7 +30,6 @@ int main() {
   std::vector<Pendulum2d::TState>* res = new std::vector<Pendulum2d::TState>;
 
   integrator.integrate(res);
-  
   std::cout << "Program ended..." << std::endl;
 //  char** test = new char*();
 //
