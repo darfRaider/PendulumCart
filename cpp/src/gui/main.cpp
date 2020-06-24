@@ -25,6 +25,7 @@
 
 #include <QApplication>
 #include "mainwindow.h"
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
 #endif
   QApplication a(argc, argv);
   MainWindow w;
+  std::cout << "LOL" << std::endl;
   w.show();
   
   return a.exec();
