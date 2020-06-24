@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 2.8)
+find_package(Qt5 COMPONENTS Widgets Core Gui REQUIRED)
+include_directories(include
+${Qt5Widgets_INCLUDE_DIRS})
+SET(CMAKE_AUTOUIC ON)  
+find_package(Qt5PrintSupport REQUIRED)				  
+#qt5_wrap_ui (mainwindow  mainwindow.ui)
+
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+add_definitions(${Qt5Widgets_DEFINITIONS})
+set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+
+
+
+add_library(guilib STATIC
+  src/GUI.cpp
+)
+
+add_library(testlib SHARED
+  src/mainwindow.ui
+  src/mainwindow.cpp
+  src/qcustomplot.cpp
+  )
+
+
+target_compile_options(guilib PRIVATE -fPIC)
+
+add_executable(pgm src/main.cpp)
+target_link_libraries(pgm testlib Qt5::Widgets)
