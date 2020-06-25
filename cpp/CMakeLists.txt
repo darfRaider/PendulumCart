@@ -11,19 +11,19 @@ include_directories(lib/mechanical/include
 					lib/math/include
 					lib/gui)
 
-				  #add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(lib/gui)
+add_subdirectory(lib/math)
+add_subdirectory(lib/mechanical)
 
 add_executable(Test test/main.cpp)
 add_executable(DynamicSimulation src/main.cpp)
 
-#set_target_properties( DynSim Test
-#    PROPERTIES
-#    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-#    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-#    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-#)
+set_target_properties( DynamicSimulation Test
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
 target_link_libraries(Test GTest::GTest GTest::Main)
-#target_link_libraries(DynSim mechanical math)
-target_link_libraries(DynamicSimulation dynSimGUI)
+target_link_libraries(DynamicSimulation gui)

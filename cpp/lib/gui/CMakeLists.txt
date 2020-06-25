@@ -13,9 +13,9 @@ QT5_WRAP_UI(QT_UIS_HDRS
             mainwindow.ui)
 
 # Add GUI library 
-add_library(dynSimGUI qcustomplot.cpp mainwindow.cpp ${QT_UIS_HDRS})
+add_library(gui qcustomplot.cpp mainwindow.cpp ${QT_UIS_HDRS})
 
 # Use the Widgets module from Qt 5.
-target_link_libraries(dynSimGUI Qt5::Widgets Qt5::PrintSupport)
+target_link_libraries(gui Qt5::Widgets Qt5::PrintSupport)
   
 
