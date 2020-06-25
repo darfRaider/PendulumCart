@@ -13,7 +13,7 @@ include_directories(lib/mechanical/include
 
 				  #add_subdirectory(src)
 add_subdirectory(test)
-add_subdirectory(lib)
+add_subdirectory(lib/gui)
 
 add_executable(Test test/main.cpp)
 add_executable(DynamicSimulation src/main.cpp)
