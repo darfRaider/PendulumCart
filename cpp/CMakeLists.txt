@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include_directories(lib/mechanical/include
 					lib/math/include
-					lib/)
+					lib/gui)
 
 				  #add_subdirectory(src)
 add_subdirectory(test)
