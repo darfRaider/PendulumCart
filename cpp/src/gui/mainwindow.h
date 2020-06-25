@@ -61,13 +61,18 @@ public:
   
 private slots:
   void realtimeDataSlot();
+  void startSimulationPushedSlot();
   
+  void on_buttonStartSimulation_clicked();
+
 private:
   Ui::MainWindow *ui;
   QString demoName;
   QTimer dataTimer;
   QCPItemTracer *itemDemoPhaseTracer;
   int currentDemoIndex;
+
+  bool isRunning;
 };
 
 #endif // MAINWINDOW_H

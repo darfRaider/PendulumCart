@@ -40,7 +40,7 @@
 *************************************************************************************************************/
 
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "build/ui_mainwindow.h"
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QScreen>
@@ -59,6 +59,9 @@ MainWindow::MainWindow(QWidget *parent) :
   setWindowTitle("QCustomPlot RealTimeDataPlot");
   statusBar()->clearMessage();
   ui->customPlot->replot();
+
+  // Set simulation data
+  isRunning = false;
 }
 
 MainWindow::~MainWindow()
@@ -97,7 +100,13 @@ void MainWindow::setupRealtimeDataDemo(QCustomPlot *customPlot)
   // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
   dataTimer.setTimerType(Qt::PreciseTimer);
   connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
-  dataTimer.start(10); // Interval 0 means to refresh as fast as possible
+  //dataTimer.start(10); // Interval 0 means to refresh as fast as possible
+}
+
+void MainWindow::startSimulationPushedSlot()
+{
+    return;
+
 }
 
 
@@ -108,8 +117,8 @@ void MainWindow::realtimeDataSlot()
   double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
   static int frameCount = 0;
   static double lastPointKey = 0;
-  std::cout << key  << std::endl;
-  std::cout << Qt::PreciseTimer << std::endl;
+  //std::cout << key  << std::endl;
+  //std::cout << Qt::PreciseTimer << std::endl;
   if (key-lastPointKey > 0.002 || frameCount == 0) // at most add point every 2 ms
   {
     // add data to lines:
@@ -144,35 +153,16 @@ void MainWindow::realtimeDataSlot()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void MainWindow::on_buttonStartSimulation_clicked()
+{
+    if( isRunning ){
+        ui->buttonStartSimulation->setText("Start");
+        dataTimer.stop(); // Interval 0 means to refresh as fast as possible
+        isRunning = false;
+    }
+    else {
+        ui->buttonStartSimulation->setText("Stop");
+        dataTimer.start(10); // Interval 0 means to refresh as fast as possible
+        isRunning = true;
+    }
+}
