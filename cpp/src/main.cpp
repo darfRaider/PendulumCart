@@ -1,46 +1,41 @@
-#include <boost/numeric/odeint.hpp>
-#include <vector>
-#include <math.h>
+/***************************************************************************
+**                                                                        **
+**  QCustomPlot, an easy to use, modern plotting widget for Qt            **
+**  Copyright (C) 2011-2018 Emanuel Eichhammer                            **
+**                                                                        **
+**  This program is free software: you can redistribute it and/or modify  **
+**  it under the terms of the GNU General Public License as published by  **
+**  the Free Software Foundation, either version 3 of the License, or     **
+**  (at your option) any later version.                                   **
+**                                                                        **
+**  This program is distributed in the hope that it will be useful,       **
+**  but WITHOUT ANY WARRANTY; without even the implied warranty of        **
+**  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         **
+**  GNU General Public License for more details.                          **
+**                                                                        **
+**  You should have received a copy of the GNU General Public License     **
+**  along with this program.  If not, see http://www.gnu.org/licenses/.   **
+**                                                                        **
+****************************************************************************
+**           Author: Emanuel Eichhammer                                   **
+**  Website/Contact: http://www.qcustomplot.com/                          **
+**             Date: 25.06.18                                             **
+**          Version: 2.0.1                                                **
+****************************************************************************/
+
+#include <QApplication>
+#include "mainwindow.h"
 #include <iostream>
-#include "Pendulum2d.hpp"
-#include "IntegratorSimpleStep.hpp"
 
-typedef IntegratorSimpleStep<Pendulum2d::TState, Pendulum2d> TIntegrator;
-typedef Pendulum2d::TState TState;
-typedef Pendulum2d::TInput TInput;
-double M = 1.0;
-double m = 1.0;
-double L = 1.0;
-double timestep = 0.01; // Fixed integrator timestep
-double Ts = 0.05;
-double u = 0.0;
-
-using namespace boost::numeric::odeint;
-int main() {
-  std::vector<TInput> inputs;	
-  for(int j = 0; j<100; j++){
-    inputs.push_back(0);
-  }
-  Pendulum2d::TState x0 = {0, 0, 0.25, 0};
-  Pendulum2d* system = new Pendulum2d(m, M, L, Ts);
-  system->setInitialCondition(x0);
-  system->setInputSequence(inputs);
-
-  TIntegrator integrator = TIntegrator(system,timestep);
-  std::vector<Pendulum2d::TState>* res = new std::vector<Pendulum2d::TState>;
-
-  integrator.integrate(res);
-  std::cout << "Program ended..." << std::endl;
-//  char** test = new char*();
-//
-//  int te = 1;
-//  QApplication qa(te,test);
-//  QWidget w;
-//  w.show();
-//  QPainter painter;
-//  painter.setPen(Qt::blue);
-//  //painter.setFont(QFont("Arial", 30));
-//  //painter.drawText(rect(), Qt::AlignCenter, "Qt");
-//  painter.fillRect(0, 0, 100, 100, Qt::white);
-  return 0;
+int main(int argc, char *argv[])
+{
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+  QApplication::setGraphicsSystem("raster");
+#endif
+  QApplication a(argc, argv);
+  MainWindow w;
+  std::cout << "LO2" << std::endl;
+  w.show();
+  
+  return a.exec();
 }
