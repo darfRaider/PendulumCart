@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 #endif
   QApplication a(argc, argv);
   MainWindow w;
-  std::cout << "LO2" << std::endl;
+  std::cout << "LOL2" << std::endl;
   w.show();
   
   return a.exec();

@@ -1,21 +1,20 @@
 cmake_minimum_required(VERSION 2.8)
-
-# set the project name
-project(DynSim)
+project(DynamicSimulation)
 
 enable_testing()
 find_package(GTest REQUIRED)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+
 include_directories(src/mechanical/include
 					src/math/include)
+
 add_subdirectory(src)
 add_subdirectory(test)
 
-#add_executable(DynSim src/main.cpp)
 add_executable(Test test/main.cpp)
-add_executable(Gui src/main.cpp)
+add_executable(DynamicSimulation src/main.cpp)
 
 #set_target_properties( DynSim Test
 #    PROPERTIES
@@ -25,4 +24,4 @@ add_executable(Gui src/main.cpp)
 #)
 target_link_libraries(Test GTest::GTest GTest::Main)
 #target_link_libraries(DynSim mechanical math)
-target_link_libraries(Gui dynSimGUIlib)
+target_link_libraries(DynamicSimulation dynSimGUI)
