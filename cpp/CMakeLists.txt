@@ -15,7 +15,7 @@ add_subdirectory(test)
 
 #add_executable(DynSim src/main.cpp)
 add_executable(Test test/main.cpp)
-#add_executable(Gui src/gui/src/main.cpp)
+add_executable(Gui src/main.cpp)
 
 #set_target_properties( DynSim Test
 #    PROPERTIES
@@ -25,4 +25,4 @@ add_executable(Test test/main.cpp)
 #)
 target_link_libraries(Test GTest::GTest GTest::Main)
 #target_link_libraries(DynSim mechanical math)
-#target_link_libraries(Gui guilib Qt5::Widgets Qt5::Core Qt5::Gui)
+target_link_libraries(Gui dynSimGUIlib)

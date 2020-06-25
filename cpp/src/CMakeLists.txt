@@ -27,6 +27,6 @@ add_executable(testexe main.cpp)
 # Use the Widgets module from Qt 5.
 target_link_libraries(dynSimGUI Qt5::Widgets Qt5::PrintSupport)
 target_link_libraries(dynSimGUIlib Qt5::Widgets Qt5::PrintSupport)
-target_link_libraries(testexe dynSimGUIlib Qt5::PrintSupport)
+target_link_libraries(testexe dynSimGUIlib)
   
 
