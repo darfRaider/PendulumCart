@@ -21,8 +21,12 @@ QT5_WRAP_UI(QT_UIS_HDRS
 
 # Tell CMake to create the helloworld executable
 add_executable(dynSimGUI qcustomplot.cpp main.cpp mainwindow.cpp ${QT_UIS_HDRS})
-
+add_library(dynSimGUIlib qcustomplot.cpp mainwindow.cpp ${QT_UIS_HDRS})
+add_executable(testexe main.cpp)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(dynSimGUI Qt5::Widgets Qt5::PrintSupport)
+target_link_libraries(dynSimGUIlib Qt5::Widgets Qt5::PrintSupport)
+target_link_libraries(testexe dynSimGUIlib Qt5::PrintSupport)
+  
 
