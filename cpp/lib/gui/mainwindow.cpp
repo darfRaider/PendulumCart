@@ -47,6 +47,7 @@
 #include <QMessageBox>
 #include <QMetaEnum>
 #include <iostream>
+#include <Pendulum2d.hpp>
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -55,7 +56,9 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   setGeometry(400, 250, 542, 390);
   setupRealtimeDataDemo(ui->customPlot);
-
+  Pendulum2d p(10, 10, 1, 0.2);
+  Pendulum2d::TState x0 = {1,1,1,1};
+  p.setInitialCondition(x0);
   setWindowTitle("QCustomPlot RealTimeDataPlot");
   statusBar()->clearMessage();
   ui->customPlot->replot();

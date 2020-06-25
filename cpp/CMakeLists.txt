@@ -26,4 +26,4 @@ set_target_properties( DynamicSimulation Test
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 target_link_libraries(Test GTest::GTest GTest::Main)
-target_link_libraries(DynamicSimulation gui)
+target_link_libraries(DynamicSimulation gui mechanical)
