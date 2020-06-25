@@ -13,12 +13,16 @@ Pendulum2d::Pendulum2d(const double m, const double M, const double L, const dou
   M(M),
   L(L),
   Ts(Ts)
-{ }
+{ 
+  std::vector<TState>* res = new std::vector<TState>();
+  integrate(*res, 0.001);
+}
 
 Pendulum2d::~Pendulum2d() { }
 
 void Pendulum2d::dfdt(const TState &x, TState &res, const double t) const {
   double u = 0;
+  std::cout << x[1] << std::endl;
   res[0] = x[1];
   res[1] = ((M*GRAVITY*sin(2*x[2]))/2.0 + M*L*pow(x[3],2)*sin(x[2]) + u)/(M*pow(sin(x[2]),2) + m);
   res[2] = x[3];
@@ -26,6 +30,10 @@ void Pendulum2d::dfdt(const TState &x, TState &res, const double t) const {
              GRAVITY*m*sin(x[2]) + u*cos(x[2]))/(L*(M*pow(sin(x[2]),2) + m));
 }
 
+void Pendulum2d::integrate(std::vector<TState> &res, double dT){
+  TIntegrator* integrator = new TIntegrator(this, dT);
+  integrator->integrate(res);
+}
 
 void Pendulum2d::getInitialCondition(TState &x0){
   x0 = initialCondition;
@@ -43,7 +51,7 @@ double Pendulum2d::getEndTime(){
   return inputSequence.size()*Ts;
 }
 
-void Pendulum2d::print(){
+void Pendulum2d::print() const {
   std::cout << "m = " << m << ", M = " << M << ", L = " << L << std::endl;
 }
 

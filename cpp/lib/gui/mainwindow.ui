@@ -29,7 +29,7 @@
      <widget class="QCustomPlot" name="customPlot" native="true">
       <property name="maximumSize">
        <size>
-        <width>250</width>
+        <width>16000</width>
         <height>16777215</height>
        </size>
       </property>

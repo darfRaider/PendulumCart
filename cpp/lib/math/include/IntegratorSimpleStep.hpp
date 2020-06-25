@@ -17,7 +17,7 @@ class IntegratorSimpleStep : public Integrator<Vector, System> {
   IntegratorSimpleStep(System* sys, const double timestep);
   virtual ~IntegratorSimpleStep();
   double SomeMethod ();
-  void integrate(std::vector<Vector> *vec);
+  void integrate(std::vector<Vector> &vec);
   static void dfdt (const Vector &x, Vector &res, const double /*t*/);
  private:
   
@@ -43,7 +43,7 @@ double IntegratorSimpleStep<Vector, System>::SomeMethod (){
 }
 
 template <typename Vector, typename System>
-void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> *vec){
+void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> &vec){
 
   Vector x0;
   sys->getInitialCondition(x0);
@@ -57,7 +57,7 @@ void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> *vec){
 
   for( double t=0.0 ; t<tMax ; t+= timestep){
 	stepper.do_step(F , x0 , t , timestep);
-	(*vec).push_back(x0);
+	vec.push_back(x0);
   }
 }
 
