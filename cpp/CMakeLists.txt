@@ -7,11 +7,13 @@ find_package(GTest REQUIRED)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-include_directories(src/mechanical/include
-					src/math/include)
+include_directories(lib/mechanical/include
+					lib/math/include
+					lib/)
 
-add_subdirectory(src)
+				  #add_subdirectory(src)
 add_subdirectory(test)
+add_subdirectory(lib)
 
 add_executable(Test test/main.cpp)
 add_executable(DynamicSimulation src/main.cpp)

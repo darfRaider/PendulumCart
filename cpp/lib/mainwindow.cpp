@@ -40,7 +40,7 @@
 *************************************************************************************************************/
 
 #include "mainwindow.h"
-#include "../build/src/ui_mainwindow.h"
+#include "../build/lib/ui_mainwindow.h"
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QScreen>
