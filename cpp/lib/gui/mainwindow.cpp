@@ -53,13 +53,13 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-  setGeometry(400, 250, 542, 390);
+  setGeometry(250, 250, 800, 300); // (hPos, vPos, width, height)
   setupRealtimeDataDemo(ui->customPlot);
 
   setWindowTitle("QCustomPlot RealTimeDataPlot");
   statusBar()->clearMessage();
   ui->customPlot->replot();
-
+test();
   // Set simulation data
   isRunning = false;
 }
@@ -165,4 +165,21 @@ void MainWindow::on_buttonStartSimulation_clicked()
         dataTimer.start(10); // Interval 0 means to refresh as fast as possible
         isRunning = true;
     }
+}
+
+void MainWindow::on_massPendulum_editingFinished()
+{
+    //TODO: maybe not needed
+//    bool isValid = isValidEntry(ui->massPendulum);
+//            //->text().isSimpleText();
+//    float f = ui->massPendulum->text().toFloat();
+//    std::cout << "Mass changed to " << f << ", test = " << test  << std::endl;
+}
+
+void MainWindow::on_massPendulum_textEdited(const QString &arg1)
+{
+    bool isValid = isValidEntry(ui->massPendulum);
+            //->text().isSimpleText();
+//    float f = ui->massPendulum->text().toFloat();
+//    std::cout << "Mass changed to " << f << ", test = " << test  << std::endl;
 }
