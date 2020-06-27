@@ -4,7 +4,7 @@
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
-if (${CMAKE_VERSION} GREATER "3.10")
+if (${CMAKE_VERSION} LESS "3.3")
   cmake_policy(SET CMP0071 NEW)
   #else()
 endif()

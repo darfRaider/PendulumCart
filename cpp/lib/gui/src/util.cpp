@@ -8,6 +8,7 @@ void test(){
 bool isValidEntry(QLineEdit* ln){
     //ln->
     std::cout << QPalette::Button << std::endl;
+
     if(ln->text().toDouble() > 0){
         ln->setStyleSheet("background: white");
     }
