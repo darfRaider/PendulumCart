@@ -3,7 +3,7 @@
 
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
-cmake_policy(SET CMP0071 NEW)
+#cmake_policy(SET CMP0071 NEW)
 # Find the QtWidgets library
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5PrintSupport)
