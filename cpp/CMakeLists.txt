@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(DynamicSimulation)
 
 enable_testing()
-find_package(GTest)
+find_package(GTest QUIET)
 if(${GTest_FOUND})
   message(STATUS "Found google testing framework.")
   add_subdirectory(test)
@@ -26,7 +26,8 @@ endif()
 
 add_executable(DynamicSimulation src/main.cpp)
 
-set_target_properties( DynamicSimulation Test
+#TODO: DO the following for google tests
+set_target_properties( DynamicSimulation
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
