@@ -8,12 +8,13 @@ if(${GTest_FOUND})
   add_subdirectory(test)
 endif()
 
+cmake_policy(SET CMP0020 OLD) # needed by win10
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include_directories(lib/mechanical/include
-					lib/math/include
-					lib/gui)
+                    lib/math/include
+                    lib/gui)
 
 add_subdirectory(lib/gui)
 add_subdirectory(lib/math)
