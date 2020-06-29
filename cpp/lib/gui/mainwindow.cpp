@@ -40,7 +40,7 @@
 *************************************************************************************************************/
 
 #include "mainwindow.h"
-#include "../../build/lib/gui/ui_mainwindow.h"
+#include "ui_mainwindow.h"
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QScreen>
@@ -48,20 +48,27 @@
 #include <QMetaEnum>
 #include <iostream>
 
+// Initialize static variables
+bool MainWindow::entriesValidityTest[N_TEST_FIELDS] = {0};
+bool MainWindow::isRunning = false;
+
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-
-  setGeometry(250, 250, 800, 300); // (hPos, vPos, width, height)
+  ValueTester* t = new ValueTester( ui );
+  setGeometry(250, 250, 800, 500); // (hPos, vPos, width, height)
   setupRealtimeDataDemo(ui->customPlot);
 
   setWindowTitle("QCustomPlot RealTimeDataPlot");
   statusBar()->clearMessage();
   ui->customPlot->replot();
-  // Set simulation data
+
+
+  // Initialize variables
   isRunning = false;
+  MainWindow::entriesValidityTest[IDX_INT_TIMESTEP] = true;
 }
 
 MainWindow::~MainWindow()
@@ -150,9 +157,6 @@ void MainWindow::realtimeDataSlot()
 }
 
 
-
-
-
 //void MainWindow::on_buttonStartSimulation_clicked()
 //{
 //    if( isRunning ){
@@ -172,3 +176,41 @@ void MainWindow::realtimeDataSlot()
 //{
 //    bool isValid = isValidEntry(ui->massPendulum);
 //}
+
+void MainWindow::on_buttonIntegrate_clicked()
+{
+    std::cout << std::endl;
+    for(int i = 0; i < N_TEST_FIELDS; i++){
+        std::cout << MainWindow::entriesValidityTest[i] << std::endl;
+    }
+}
+
+void MainWindow::on_inputMassCart_textEdited(const QString &arg1)
+{
+    MainWindow::entriesValidityTest[IDX_MASS_CART] = isValidEntry(ui->inputMassCart);
+}
+
+void MainWindow::on_inputMassPendulum_textEdited(const QString &arg1)
+{
+    MainWindow::entriesValidityTest[IDX_MASS_PENDULUM] = isValidEntry(ui->inputMassPendulum);
+}
+
+void MainWindow::on_inputLengthPendulum_textEdited(const QString &arg1)
+{
+    MainWindow::entriesValidityTest[IDX_LENGTH] = isValidEntry(ui->inputLengthPendulum);
+}
+
+void MainWindow::on_inputSimulationTime_textEdited(const QString &arg1)
+{
+    MainWindow::entriesValidityTest[IDX_SIM_TIME] = isValidEntry(ui->inputSimulationTime);
+}
+
+void MainWindow::on_inputSimulationTimestep_textEdited(const QString &arg1)
+{
+    MainWindow::entriesValidityTest[IDX_SIM_TIMESTEP] = isValidEntry(ui->inputSimulationTimestep);
+}
+
+void MainWindow::on_inputIntegratorTimestep_textEdited(const QString &arg1)
+{
+    MainWindow::entriesValidityTest[IDX_INT_TIMESTEP] = isValidEntry(ui->inputIntegratorTimestep);
+}

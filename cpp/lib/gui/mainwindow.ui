@@ -35,13 +35,20 @@
           <height>16777215</height>
          </size>
         </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>GroupBox</string>
+        </property>
         <widget class="QWidget" name="">
          <property name="geometry">
           <rect>
-           <x>410</x>
-           <y>10</y>
+           <x>50</x>
+           <y>30</y>
            <width>253</width>
-           <height>260</height>
+           <height>294</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout">
@@ -74,7 +81,7 @@
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QLineEdit" name="simulationTimestep">
+           <widget class="QLineEdit" name="inputSimulationTimestep">
             <property name="maximumSize">
              <size>
               <width>50</width>
@@ -91,7 +98,7 @@
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLineEdit" name="simulationTime">
+           <widget class="QLineEdit" name="inputSimulationTime">
             <property name="maximumSize">
              <size>
               <width>50</width>
@@ -101,7 +108,7 @@
            </widget>
           </item>
           <item row="3" column="1" colspan="2">
-           <widget class="QComboBox" name="inputType">
+           <widget class="QComboBox" name="inputInputType">
             <property name="currentText">
              <string>Zero input</string>
             </property>
@@ -120,7 +127,7 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLineEdit" name="lengthPendulum">
+           <widget class="QLineEdit" name="inputLengthPendulum">
             <property name="maximumSize">
              <size>
               <width>50</width>
@@ -130,7 +137,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="massCart">
+           <widget class="QLineEdit" name="inputMassCart">
             <property name="maximumSize">
              <size>
               <width>50</width>
@@ -143,7 +150,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="massPendulum">
+           <widget class="QLineEdit" name="inputMassPendulum">
             <property name="maximumSize">
              <size>
               <width>50</width>
@@ -191,7 +198,7 @@
            </widget>
           </item>
           <item row="6" column="1">
-           <widget class="QLineEdit" name="integratorTimestep">
+           <widget class="QLineEdit" name="inputIntegratorTimestep">
             <property name="maximumSize">
              <size>
               <width>50</width>
@@ -200,6 +207,13 @@
             </property>
             <property name="text">
              <string>0.01</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1" colspan="2">
+           <widget class="QPushButton" name="buttonIntegrate">
+            <property name="text">
+             <string>Integrate</string>
             </property>
            </widget>
           </item>
@@ -214,13 +228,6 @@
            <widget class="QLabel" name="label_13">
             <property name="text">
              <string>s</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1" colspan="2">
-           <widget class="QPushButton" name="pushButton">
-            <property name="text">
-             <string>Integrate</string>
             </property>
            </widget>
           </item>

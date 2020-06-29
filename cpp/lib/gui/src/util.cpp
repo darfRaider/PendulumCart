@@ -13,3 +13,12 @@ bool isValidEntry(QLineEdit* ln){
     }
     return true;
 }
+
+// Test if values are valid
+bool valuesAreValid(const bool* list){
+    for(int i = 0; i < N_TEST_FIELDS; i++){
+        if(!list[i])
+            return false;
+    }
+    return true;
+}

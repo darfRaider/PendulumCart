@@ -45,7 +45,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include "qcustomplot.h" // the header file of QCustomPlot. Don't forget to add it to your project, if you use an IDE, so it gets compiled.
-#include <util.hpp>
+#include "util.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -64,13 +64,30 @@ private slots:
   void realtimeDataSlot();
   void startSimulationPushedSlot();
 
+  void on_buttonIntegrate_clicked();
+
+  void on_inputMassCart_textEdited(const QString &arg1);
+
+  void on_inputMassPendulum_textEdited(const QString &arg1);
+
+  void on_inputLengthPendulum_textEdited(const QString &arg1);
+
+  void on_inputSimulationTime_textEdited(const QString &arg1);
+
+  void on_inputSimulationTimestep_textEdited(const QString &arg1);
+
+  void on_inputIntegratorTimestep_textEdited(const QString &arg1);
+
 private:
   Ui::MainWindow *ui;
   QString demoName;
   QTimer dataTimer;
   QCPItemTracer *itemDemoPhaseTracer;
   int currentDemoIndex;
-  bool isRunning;
+
+  // Variables to check validity
+  static bool isRunning;
+  static bool entriesValidityTest[N_TEST_FIELDS];
 };
 
 #endif // MAINWINDOW_H
