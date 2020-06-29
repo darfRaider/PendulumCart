@@ -46,6 +46,7 @@
 #include <QTimer>
 #include "qcustomplot.h" // the header file of QCustomPlot. Don't forget to add it to your project, if you use an IDE, so it gets compiled.
 #include <util.hpp>
+
 namespace Ui {
 class MainWindow;
 }
@@ -62,12 +63,6 @@ public:
 private slots:
   void realtimeDataSlot();
   void startSimulationPushedSlot();
-  
-  void on_buttonStartSimulation_clicked();
-
-  void on_massPendulum_editingFinished();
-
-  void on_massPendulum_textEdited(const QString &arg1);
 
 private:
   Ui::MainWindow *ui;
@@ -75,7 +70,6 @@ private:
   QTimer dataTimer;
   QCPItemTracer *itemDemoPhaseTracer;
   int currentDemoIndex;
-
   bool isRunning;
 };
 
