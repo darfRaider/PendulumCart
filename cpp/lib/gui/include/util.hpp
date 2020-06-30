@@ -14,4 +14,7 @@ static const int N_TEST_FIELDS = 6;
 
 // Test if Line value is valid
 bool isValidEntry(QLineEdit* ln);
+bool valuesAreValid(const bool* list);
+
+
 #endif

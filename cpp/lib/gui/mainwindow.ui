@@ -42,7 +42,7 @@
         <property name="title">
          <string>GroupBox</string>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>50</x>
@@ -88,6 +88,9 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="text">
+             <string>0.05</string>
+            </property>
            </widget>
           </item>
           <item row="5" column="0">
@@ -104,6 +107,9 @@
               <width>50</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="text">
+             <string>10</string>
             </property>
            </widget>
           </item>
@@ -134,6 +140,9 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="text">
+             <string>1</string>
+            </property>
            </widget>
           </item>
           <item row="0" column="1">
@@ -147,6 +156,9 @@
             <property name="styleSheet">
              <string notr="true"/>
             </property>
+            <property name="text">
+             <string>1</string>
+            </property>
            </widget>
           </item>
           <item row="1" column="1">
@@ -159,6 +171,9 @@
             </property>
             <property name="styleSheet">
              <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>1</string>
             </property>
            </widget>
           </item>
@@ -206,7 +221,7 @@
              </size>
             </property>
             <property name="text">
-             <string>0.01</string>
+             <string>0.001</string>
             </property>
            </widget>
           </item>
@@ -231,8 +246,17 @@
             </property>
            </widget>
           </item>
+          <item row="7" column="0">
+           <widget class="QProgressBar" name="progressBar">
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
+        <zorder>layoutWidget</zorder>
+        <zorder>customPlot</zorder>
        </widget>
       </item>
      </layout>

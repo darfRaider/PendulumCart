@@ -40,7 +40,7 @@
 *************************************************************************************************************/
 
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "lib/gui/ui_mainwindow.h"
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QScreen>
@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-  ValueTester* t = new ValueTester( ui );
+
   setGeometry(250, 250, 800, 500); // (hPos, vPos, width, height)
   setupRealtimeDataDemo(ui->customPlot);
 
@@ -65,10 +65,11 @@ MainWindow::MainWindow(QWidget *parent) :
   statusBar()->clearMessage();
   ui->customPlot->replot();
 
-
   // Initialize variables
   isRunning = false;
-  MainWindow::entriesValidityTest[IDX_INT_TIMESTEP] = true;
+  for(int i = 0; i < N_TEST_FIELDS; i++){ // Start with valid choice
+      MainWindow::entriesValidityTest[i] = true;
+  }
 }
 
 MainWindow::~MainWindow()
@@ -172,17 +173,21 @@ void MainWindow::realtimeDataSlot()
 //}
 
 
-//void MainWindow::on_massCart_editingFinished()
-//{
-//    bool isValid = isValidEntry(ui->massPendulum);
-//}
-
 void MainWindow::on_buttonIntegrate_clicked()
 {
+
     std::cout << std::endl;
     for(int i = 0; i < N_TEST_FIELDS; i++){
-        std::cout << MainWindow::entriesValidityTest[i] << std::endl;
+
     }
+    if(!valuesAreValid(MainWindow::entriesValidityTest)){
+        ui->statusBar->showMessage("Integration failed",5000);
+//        ui->statusBar->currentMessage("Error: Values are invalid.");
+    }
+    else {
+        std::cout << "Integrating" << std::endl;
+    }
+
 }
 
 void MainWindow::on_inputMassCart_textEdited(const QString &arg1)

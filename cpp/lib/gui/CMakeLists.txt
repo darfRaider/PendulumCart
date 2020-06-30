@@ -1,5 +1,7 @@
 # Find includes in corresponding build directories
 #set(CMAKE_INCLUDE_CURRENT_DIR ON)
+include_directories( ${CMAKE_BINARY_DIR} )
+
 #include_directories(include)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)

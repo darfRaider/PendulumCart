@@ -1,5 +1,5 @@
 #include "util.hpp"
-#include "QLineEdit"
+
 
 
 // Test if value is > 0
