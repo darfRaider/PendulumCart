@@ -17,15 +17,13 @@ typedef double Input;
 class Pendulum2d : protected Physics, public System<State,Input> {
 
  public:
-  struct systemParameters {
-	double m, M, L, Ts;
-  };
-  Pendulum2d(const double m, const double M, const double L, const double Ts);
+ Pendulum2d(const double m, const double M, const double L, const double Ts);
   virtual ~Pendulum2d();
 
   void dfdt(const TState &x, TState &res, const double t);
 
-  void print();
+  void print() const;
+  void printParameters() const;
 
   void getInitialCondition(TState &x0);
   void setInitialCondition(TState &x0);
