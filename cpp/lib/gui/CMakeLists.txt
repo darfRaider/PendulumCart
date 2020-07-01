@@ -1,17 +1,14 @@
 # Find includes in corresponding build directories
-#set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories( ${CMAKE_BINARY_DIR} )
 
-#include_directories(include)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
-if (${CMAKE_VERSION} LESS "3.3")
-  cmake_policy(SET CMP0071 NEW)
+#if (${CMAKE_VERSION} LESS "3.3")
+#  cmake_policy(SET CMP0071 NEW)
   #else()
-endif()
+  #endif()
 
-#set(CMAKE_AUTOUIC ON)
 # Find the QtWidgets library
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5PrintSupport)
