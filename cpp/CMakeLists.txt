@@ -23,7 +23,7 @@ add_subdirectory(lib/mechanical)
 
 if(${GTest_FOUND})
   add_executable(Test test/main.cpp)
-  target_link_libraries(Test GTest::GTest GTest::Main)
+  target_link_libraries(Test math mechanical GTest::GTest GTest::Main)
   set_target_properties( Test
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
