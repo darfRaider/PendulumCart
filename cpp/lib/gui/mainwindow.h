@@ -68,6 +68,7 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
   void setupRealtimeDataDemo(QCustomPlot *customPlot);
+  void plotData();
 
 private slots:
   void realtimeDataSlot();

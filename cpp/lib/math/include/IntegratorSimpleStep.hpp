@@ -21,7 +21,7 @@ class IntegratorSimpleStep : public Integrator<Vector, System> {
   static void dfdt (const Vector &x, Vector &res, const double /*t*/);
  private:
   
-	double timestep;
+  double timestep;
   System* sys;
   boost::numeric::odeint::runge_kutta4< Vector > stepper;
 };
@@ -37,12 +37,6 @@ IntegratorSimpleStep<Vector, System>::~IntegratorSimpleStep() {
 }
 
 template <typename Vector, typename System>
-double IntegratorSimpleStep<Vector, System>::SomeMethod (){
-  std::cout << "I am working" << std::endl;
-  return 2.0;
-}
-
-template <typename Vector, typename System>
 void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> *vec){
 
   Vector x0;
@@ -50,11 +44,9 @@ void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> *vec){
   sys->print();
   double tMax = sys->getEndTime();
   auto F = [&](const Vector& x, Vector& res, const double t){
-    sys->dfdt(x, res, t);
+  sys->dfdt(x, res, t);
   };
 	
-  std::cout << "Integrating from 0 to " << tMax << " seconds.." << std::endl;
-
   for( double t=0.0 ; t<tMax ; t+= timestep){
 	stepper.do_step(F , x0 , t , timestep);
 	(*vec).push_back(x0);

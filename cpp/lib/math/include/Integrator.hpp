@@ -15,7 +15,6 @@ class Integrator {
   public:
   Integrator();
   virtual ~Integrator();
-  virtual double SomeMethod () = 0;  // This method is not implemented in the base class, making it a pure virtual method. Subclasses must implement it
   virtual void integrate(std::vector<Vector> *vec) = 0;
 };
 
