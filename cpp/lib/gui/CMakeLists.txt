@@ -12,6 +12,7 @@ set(CMAKE_AUTOMOC ON)
 # Find the QtWidgets library
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5PrintSupport)
+message(STATUS "Found QT5 Widgets at ${Qt5Widgets_DIR}")
 
 # Generate ui_mainwindow.h
 QT5_WRAP_UI(QT_UIS_HDRS

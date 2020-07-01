@@ -14,7 +14,7 @@ template<typename Vector, typename System>
 class IntegratorSimpleStep : public Integrator<Vector, System> {
 
  public:
-  IntegratorSimpleStep(System* sys, const double timestep);
+  IntegratorSimpleStep(System* sys, const double timestep, QProgressBar* pProgressBar = NULL);
   virtual ~IntegratorSimpleStep();
   double SomeMethod ();
   void integrate(std::vector<Vector> *vec);
@@ -27,7 +27,7 @@ class IntegratorSimpleStep : public Integrator<Vector, System> {
 };
 
 template <typename Vector, typename System>
-IntegratorSimpleStep<Vector, System>::IntegratorSimpleStep(System* sys, const double timestep) {
+IntegratorSimpleStep<Vector, System>::IntegratorSimpleStep(System* sys, const double timestep, QProgressBar* pProgressBar) {
   this->sys = sys;
 	this->timestep = timestep;
 }
