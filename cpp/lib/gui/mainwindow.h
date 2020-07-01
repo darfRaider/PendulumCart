@@ -44,8 +44,17 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include "qcustomplot.h" // the header file of QCustomPlot. Don't forget to add it to your project, if you use an IDE, so it gets compiled.
+#include <QDebug>
+#include <QDesktopWidget>
+#include <QScreen>
+#include <QMessageBox>
+#include <QMetaEnum>
+#include <iostream>
+
+#include "qcustomplot.h"
 #include "util.hpp"
+#include "Pendulum2d.hpp"
+#include "IntegratorSimpleStep.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -88,6 +97,9 @@ private:
   // Variables to check validity
   static bool isRunning;
   static bool entriesValidityTest[N_TEST_FIELDS];
+
+  Pendulum2d* pPendulum;
+  Integrator<Pendulum2d::TState, Pendulum2d> * pIntegrator;
 };
 
 #endif // MAINWINDOW_H

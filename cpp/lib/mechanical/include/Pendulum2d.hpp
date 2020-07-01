@@ -19,18 +19,18 @@ class Pendulum2d : protected Physics {
 
   virtual ~Pendulum2d();
 
-  void dfdt(const TState &x, TState &res, const double t) const;
+  void dfdt(const TState &x, TState &res, const double t);
 
   void print();
 
   void getInitialCondition(TState &x0);
   void setInitialCondition(TState &x0);
-  void setInputSequence(std::vector<TInput> seq);
-	double getEndTime();
+  void setInputSequence(std::vector<TInput>* seq);
+  double getEndTime();
 
-	double sumE(TState x);
-	double ePot(TState x);
-	double eKin(TState x);
+  double sumE(TState x);
+  double ePot(TState x);
+  double eKin(TState x);
  
 	private:
 	double m, M, L;

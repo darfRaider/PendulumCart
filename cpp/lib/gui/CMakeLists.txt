@@ -25,4 +25,4 @@ add_library(gui STATIC
   ${QT_UIS_HDRS})
 
 # Use the Widgets module from Qt 5.
-target_link_libraries(gui Qt5::Widgets Qt5::PrintSupport)
+target_link_libraries(gui mechanical Qt5::Widgets Qt5::PrintSupport)

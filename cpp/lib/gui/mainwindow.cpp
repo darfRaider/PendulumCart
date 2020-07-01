@@ -41,12 +41,7 @@
 
 #include "mainwindow.h"
 #include "lib/gui/ui_mainwindow.h"
-#include <QDebug>
-#include <QDesktopWidget>
-#include <QScreen>
-#include <QMessageBox>
-#include <QMetaEnum>
-#include <iostream>
+
 
 // Initialize static variables
 bool MainWindow::entriesValidityTest[N_TEST_FIELDS] = {0};
@@ -175,19 +170,28 @@ void MainWindow::realtimeDataSlot()
 
 void MainWindow::on_buttonIntegrate_clicked()
 {
-
-    std::cout << std::endl;
-    for(int i = 0; i < N_TEST_FIELDS; i++){
-
-    }
     if(!valuesAreValid(MainWindow::entriesValidityTest)){
         ui->statusBar->showMessage("Integration failed",5000);
-//        ui->statusBar->currentMessage("Error: Values are invalid.");
     }
     else {
-        std::cout << "Integrating" << std::endl;
-    }
+        Pendulum2d::TInput zero = 0;
+        std::vector<Pendulum2d::TInput>* inputVector = new std::vector<Pendulum2d::TInput>;
+        for(int i = 0; i < 100; i++){
+            (*inputVector).push_back(zero);
+        }
 
+        std::vector<Pendulum2d::TState>* resvec = new std::vector<Pendulum2d::TState>;
+        double M = ui->inputMassPendulum->text().toDouble();
+        double m = ui->inputMassCart->text().toDouble();
+        double L = ui->inputLengthPendulum->text().toDouble();
+        double systemTimestep = ui->inputSimulationTimestep->text().toDouble();
+        double integratorTimestep = ui->inputIntegratorTimestep->text().toDouble();
+
+        pPendulum = new Pendulum2d(m,M,L,systemTimestep);
+        pPendulum->setInputSequence(inputVector);
+        pIntegrator = new IntegratorSimpleStep<Pendulum2d::TState, Pendulum2d>(pPendulum, integratorTimestep);
+        pIntegrator->integrate(resvec);
+    }
 }
 
 void MainWindow::on_inputMassCart_textEdited(const QString &arg1)
