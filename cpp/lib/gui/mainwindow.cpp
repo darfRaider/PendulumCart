@@ -179,7 +179,6 @@ void MainWindow::on_buttonIntegrate_clicked()
         for(int i = 0; i < 100; i++){
             (*inputVector).push_back(zero);
         }
-
         std::vector<Pendulum2d::TState>* resvec = new std::vector<Pendulum2d::TState>;
         double M = ui->inputMassPendulum->text().toDouble();
         double m = ui->inputMassCart->text().toDouble();
@@ -189,7 +188,8 @@ void MainWindow::on_buttonIntegrate_clicked()
 
         pPendulum = new Pendulum2d(m,M,L,systemTimestep);
         pPendulum->setInputSequence(inputVector);
-        pIntegrator = new IntegratorSimpleStep<Pendulum2d::TState, Pendulum2d>(pPendulum, integratorTimestep);
+        pIntegrator = new IntegratorSimpleStep<Pendulum2d::TState, Pendulum2d>(pPendulum, integratorTimestep, 
+			ui->progressBar);
         pIntegrator->integrate(resvec);
     }
 }
