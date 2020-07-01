@@ -13,7 +13,9 @@ Pendulum2d::Pendulum2d(const double m, const double M, const double L, const dou
   M(M),
   L(L),
   Ts(Ts)
-{ }
+{ 
+  initialCondition = {0,0,0,0}; // Default initial condition
+}
 
 Pendulum2d::~Pendulum2d() { }
 

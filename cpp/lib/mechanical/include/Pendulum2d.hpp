@@ -13,9 +13,9 @@ class Pendulum2d : protected Physics {
 
  public:
   typedef std::vector<double> TState;
-	typedef double TInput;
+  typedef double TInput;
   
-	Pendulum2d(const double m, const double M, const double L, const double Ts);
+  Pendulum2d(const double m, const double M, const double L, const double Ts);
 
   virtual ~Pendulum2d();
 
@@ -32,12 +32,12 @@ class Pendulum2d : protected Physics {
   double ePot(TState x);
   double eKin(TState x);
  
-	private:
-	double m, M, L;
+  private:
+  double m, M, L;
   double Ts; // Sampling time of of input (zero-order-hold)
-	TState initialCondition;
+  TState initialCondition;
   std::vector<TInput> inputSequence; 
-	TInput getInput(double t);
+  TInput getInput(double t);
 };
 
 #endif /* INCLUDE_PENDULUM2D_HPP_ */
