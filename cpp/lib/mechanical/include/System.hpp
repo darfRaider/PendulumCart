@@ -15,6 +15,10 @@ class System {
   
   virtual double getTotalMass() const = 0;
   
+  virtual void getInitialCondition(TState& x0) = 0;
+  
+  virtual double getEndTime() const = 0;
+  
   virtual void printParameters() const = 0;
   virtual void print() const = 0;
 };

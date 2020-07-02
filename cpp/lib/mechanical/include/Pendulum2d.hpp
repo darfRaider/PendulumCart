@@ -28,7 +28,7 @@ class Pendulum2d : protected Physics, public System<State,Input> {
   void getInitialCondition(TState &x0);
   void setInitialCondition(TState &x0);
   void setInputSequence(std::vector<TInput>* seq);
-  double getEndTime();
+  double getEndTime() const;
 
   double sumE(const TState x) const;
   double ePot(const TState x) const;

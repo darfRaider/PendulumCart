@@ -41,7 +41,7 @@ void Pendulum2d::setInputSequence(std::vector<TInput>* seq){
   this->inputSequence = *seq;
 }
 
-double Pendulum2d::getEndTime(){
+double Pendulum2d::getEndTime() const{
   return inputSequence.size()*Ts;
 }
 

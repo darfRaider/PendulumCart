@@ -55,13 +55,13 @@ void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> *vec){
     sys->dfdt(x, res, t);
   };
 	
-  std::cout << "Integrating from 0 to " << tMax << " seconds.." << std::endl;
+  //std::cout << "Integrating from 0 to " << tMax << " seconds.." << std::endl;
 
   for( double t=0.0 ; t<tMax ; t+= timestep){
 	stepper.do_step(F , x0 , t , timestep);
 	(*vec).push_back(x0);
 	if(pProgressBar != NULL){
-	  pProgressBar->setValue((int) (100.9 * t / tMax));
+	  pProgressBar->setValue((int) (100.0 * t / (tMax-timestep) ));
 	}
   }
 }
