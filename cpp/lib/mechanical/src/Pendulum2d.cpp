@@ -41,12 +41,16 @@ void Pendulum2d::setInputSequence(std::vector<TInput>* seq){
   this->inputSequence = *seq;
 }
 
-double Pendulum2d::getEndTime(){
+double Pendulum2d::getEndTime() const{
   return inputSequence.size()*Ts;
 }
 
-void Pendulum2d::print(){
+void Pendulum2d::print() const {
   std::cout << "m = " << m << ", M = " << M << ", L = " << L << std::endl;
+}
+
+void Pendulum2d::printParameters() const {
+
 }
 
 double Pendulum2d::sumE(const TState x) const {

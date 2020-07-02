@@ -218,11 +218,7 @@ void MainWindow::on_buttonIntegrate_clicked()
         for(int i = 0; i < 100; i++){
             (*inputVector).push_back(zero);
         }
-
-        std::vector<Pendulum2d::TState>* pResvec = new std::vector<Pendulum2d::TState>;
-        std::vector<Pendulum2d::TState>& resvec = *pResvec;
-
-
+        std::vector<Pendulum2d::TState>* resvec = new std::vector<Pendulum2d::TState>;
         double M = ui->inputMassPendulum->text().toDouble();
         double m = ui->inputMassCart->text().toDouble();
         double L = ui->inputLengthPendulum->text().toDouble();
@@ -232,10 +228,10 @@ void MainWindow::on_buttonIntegrate_clicked()
 
         pPendulum = new Pendulum2d(m,M,L,systemTimestep);
         pPendulum->setInputSequence(inputVector);
-        pIntegrator = new IntegratorSimpleStep<Pendulum2d::TState, Pendulum2d>(pPendulum, integratorTimestep);
-        pIntegrator->integrate(pResvec);
-        std::cout << "Resvec size = " << resvec.size() <<std::endl;
-     }
+        pIntegrator = new IntegratorSimpleStep<Pendulum2d::TState, Pendulum2d>(pPendulum, integratorTimestep, 
+			ui->progressBar);
+        pIntegrator->integrate(resvec);
+    }
 }
 
 void MainWindow::on_inputMassCart_textEdited(const QString &arg1)

@@ -9,21 +9,12 @@
 #define INCLUDE_INTEGRATOR_HPP_
 #include <iostream>
 #include <boost/numeric/odeint.hpp>
+#include <QProgressBar>
 
 template<typename Vector, typename System>
 class Integrator {
   public:
-  Integrator();
-  virtual ~Integrator();
   virtual void integrate(std::vector<Vector> *vec) = 0;
 };
-
-template <typename Vector, typename System>
-Integrator<Vector, System>::Integrator() {
-}
-
-template <typename Vector, typename System>
-Integrator<Vector, System>::~Integrator() {
-}
 
 #endif /* INCLUDE_INTEGRATOR_HPP_ */

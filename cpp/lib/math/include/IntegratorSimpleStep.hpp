@@ -14,7 +14,7 @@ template<typename Vector, typename System>
 class IntegratorSimpleStep : public Integrator<Vector, System> {
 
  public:
-  IntegratorSimpleStep(System* sys, const double timestep);
+  IntegratorSimpleStep(System* sys, const double timestep, QProgressBar* pProgressBar = NULL);
   virtual ~IntegratorSimpleStep();
   double SomeMethod ();
   void integrate(std::vector<Vector> *vec);
@@ -24,12 +24,14 @@ class IntegratorSimpleStep : public Integrator<Vector, System> {
   double timestep;
   System* sys;
   boost::numeric::odeint::runge_kutta4< Vector > stepper;
+  QProgressBar* pProgressBar;
 };
 
 template <typename Vector, typename System>
-IntegratorSimpleStep<Vector, System>::IntegratorSimpleStep(System* sys, const double timestep) {
+IntegratorSimpleStep<Vector, System>::IntegratorSimpleStep(System* sys, const double timestep, QProgressBar* pProgressBar) {
   this->sys = sys;
-	this->timestep = timestep;
+  this->timestep = timestep;
+  this->pProgressBar = pProgressBar;
 }
 
 template <typename Vector, typename System>
@@ -46,10 +48,12 @@ void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> *vec){
   auto F = [&](const Vector& x, Vector& res, const double t){
   sys->dfdt(x, res, t);
   };
-	
   for( double t=0.0 ; t<tMax ; t+= timestep){
 	stepper.do_step(F , x0 , t , timestep);
 	(*vec).push_back(x0);
+	if(pProgressBar != NULL){
+	  pProgressBar->setValue((int) (100.0 * t / (tMax-timestep) ));
+	}
   }
 }
 
