@@ -51,6 +51,7 @@
 #include <QMetaEnum>
 #include <iostream>
 
+#include <math.h>
 #include "qcustomplot.h"
 #include "util.hpp"
 #include "Pendulum2d.hpp"
@@ -72,6 +73,7 @@ public:
 
 private slots:
   void realtimeDataSlot();
+  
   void startSimulationPushedSlot();
 
   void on_buttonIntegrate_clicked();
@@ -87,6 +89,8 @@ private slots:
   void on_inputSimulationTimestep_textEdited(const QString &arg1);
 
   void on_inputIntegratorTimestep_textEdited(const QString &arg1);
+
+  void on_buttonStartSimulation_clicked();
 
 private:
   Ui::MainWindow *ui;

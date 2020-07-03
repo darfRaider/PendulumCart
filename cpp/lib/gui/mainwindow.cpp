@@ -154,6 +154,13 @@ void MainWindow::realtimeDataSlot()
 
 void MainWindow::plotData()
 {
+    for(double t  = 0; t < 10; t+=0.01){
+        ui->customPlot->graph(0)->addData(t,sin(t*2.0*3.1315/10.0));
+    }
+         ui->customPlot->xAxis->setRange(0, 10, Qt::AlignLeft);
+  ui->customPlot->replot();
+ //   ui->customPlot->replot();
+  /*
   static QTime time(QTime::currentTime());
   // calculate two new data points:
   double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
@@ -167,12 +174,15 @@ void MainWindow::plotData()
     ui->customPlot->graph(0)->addData(key, qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
     ui->customPlot->graph(1)->addData(key, qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
     // rescale value (vertical) axis to fit the current data:
-    //ui->customPlot->graph(0)->rescaleValueAxis();
+    */// ui->customPlot->graph(0)->rescaleValueAxis(true);  
+     //    ui->customPlot->xAxis->setRange(0, 8, Qt::AlignRight);
+         /*
     //ui->customPlot->graph(1)->rescaleValueAxis(true);
     lastPointKey = key;
   }
   // make key axis range scroll with the data (at a constant range size of 8):
   ui->customPlot->xAxis->setRange(key, 8, Qt::AlignRight);
+                                                            
   ui->customPlot->replot();
 
   // calculate frames per second:
@@ -189,23 +199,24 @@ void MainWindow::plotData()
     lastFpsKey = key;
     frameCount = 0;
   }
+  */
 }
 
-
-//void MainWindow::on_buttonStartSimulation_clicked()
-//{
-//    if( isRunning ){
-//        ui->buttonStartSimulation->setText("Start");
-//        dataTimer.stop(); // Interval 0 means to refresh as fast as possible
-//        isRunning = false;
-//    }
-//    else {
-//        ui->buttonStartSimulation->setText("Stop");
-//        dataTimer.start(10); // Interval 0 means to refresh as fast as possible
-//        isRunning = true;
-//    }
-//}
-
+/*
+void MainWindow::on_buttonStartSimulation_clicked()
+{
+    if( isRunning ){
+        ui->buttonStartSimulation->setText("Start");
+        dataTimer.stop(); // Interval 0 means to refresh as fast as possible
+        isRunning = false;
+    }
+    else {
+        ui->buttonStartSimulation->setText("Stop");
+        dataTimer.start(10); // Interval 0 means to refresh as fast as possible
+        isRunning = true;
+    }
+}
+*/
 
 void MainWindow::on_buttonIntegrate_clicked()
 {
@@ -262,4 +273,20 @@ void MainWindow::on_inputSimulationTimestep_textEdited(const QString &arg1)
 void MainWindow::on_inputIntegratorTimestep_textEdited(const QString &arg1)
 {
     MainWindow::entriesValidityTest[IDX_INT_TIMESTEP] = isValidEntry(ui->inputIntegratorTimestep);
+}
+
+void MainWindow::on_buttonStartSimulation_clicked()
+{
+    /*
+    if( isRunning ){
+        ui->buttonStartSimulation->setText("Start");
+        isRunning = false;
+    }
+    else {
+        ui->buttonStartSimulation->setText("Stop");
+        isRunning = true;
+    }
+    */
+    
+    plotData();
 }
