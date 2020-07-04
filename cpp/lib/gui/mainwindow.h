@@ -56,7 +56,6 @@
 #include "util.hpp"
 #include "Pendulum2d.hpp"
 #include "IntegratorSimpleStep.hpp"
-//#include "VRep.hpp"
 
 namespace Ui {
 class MainWindow;
