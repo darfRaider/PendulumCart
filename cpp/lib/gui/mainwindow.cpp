@@ -42,11 +42,9 @@
 #include "mainwindow.h"
 #include "lib/gui/ui_mainwindow.h"
 
-
 // Initialize static variables
 bool MainWindow::entriesValidityTest[N_TEST_FIELDS] = {0};
 bool MainWindow::isRunning = false;
-
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
@@ -65,6 +63,8 @@ MainWindow::MainWindow(QWidget *parent) :
   for(int i = 0; i < N_TEST_FIELDS; i++){ // Start with valid choice
       MainWindow::entriesValidityTest[i] = true;
   }
+  //  VRep* v = new VRep();
+  //  v->connect();
 }
 
 MainWindow::~MainWindow()
