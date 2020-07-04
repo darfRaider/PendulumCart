@@ -44,7 +44,18 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include "qcustomplot.h" // the header file of QCustomPlot. Don't forget to add it to your project, if you use an IDE, so it gets compiled.
+#include <QDebug>
+#include <QDesktopWidget>
+#include <QScreen>
+#include <QMessageBox>
+#include <QMetaEnum>
+#include <iostream>
+
+#include <math.h>
+#include "qcustomplot.h"
+#include "util.hpp"
+#include "Pendulum2d.hpp"
+#include "IntegratorSimpleStep.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -58,11 +69,27 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
   void setupRealtimeDataDemo(QCustomPlot *customPlot);
-  
+  void plotData();
+
 private slots:
   void realtimeDataSlot();
-  void startSimulationPushedSlot();
   
+  void startSimulationPushedSlot();
+
+  void on_buttonIntegrate_clicked();
+
+  void on_inputMassCart_textEdited(const QString &arg1);
+
+  void on_inputMassPendulum_textEdited(const QString &arg1);
+
+  void on_inputLengthPendulum_textEdited(const QString &arg1);
+
+  void on_inputSimulationTime_textEdited(const QString &arg1);
+
+  void on_inputSimulationTimestep_textEdited(const QString &arg1);
+
+  void on_inputIntegratorTimestep_textEdited(const QString &arg1);
+
   void on_buttonStartSimulation_clicked();
 
 private:
@@ -72,7 +99,12 @@ private:
   QCPItemTracer *itemDemoPhaseTracer;
   int currentDemoIndex;
 
-  bool isRunning;
+  // Variables to check validity
+  static bool isRunning;
+  static bool entriesValidityTest[N_TEST_FIELDS];
+
+  Pendulum2d* pPendulum;
+  Integrator<Pendulum2d::TState, Pendulum2d> * pIntegrator;
 };
 
 #endif // MAINWINDOW_H

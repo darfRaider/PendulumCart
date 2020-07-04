@@ -14,25 +14,18 @@ Pendulum2d::Pendulum2d(const double m, const double M, const double L, const dou
   L(L),
   Ts(Ts)
 { 
-  std::vector<TState>* res = new std::vector<TState>();
-  integrate(*res, 0.001);
+  initialCondition = {0,0,0,0}; // Default initial condition
 }
 
 Pendulum2d::~Pendulum2d() { }
 
-void Pendulum2d::dfdt(const TState &x, TState &res, const double t) const {
-  double u = 0;
-  std::cout << x[1] << std::endl;
+void Pendulum2d::dfdt(const TState &x, TState &res, const double t){
+  double u = getInput(t);
   res[0] = x[1];
   res[1] = ((M*GRAVITY*sin(2*x[2]))/2.0 + M*L*pow(x[3],2)*sin(x[2]) + u)/(M*pow(sin(x[2]),2) + m);
   res[2] = x[3];
   res[3] = -(M*GRAVITY*sin(x[2]) + M*L*pow(x[3],2)*sin(2*x[2])/2.0 +
              GRAVITY*m*sin(x[2]) + u*cos(x[2]))/(L*(M*pow(sin(x[2]),2) + m));
-}
-
-void Pendulum2d::integrate(std::vector<TState> &res, double dT){
-  TIntegrator* integrator = new TIntegrator(this, dT);
-  integrator->integrate(res);
 }
 
 void Pendulum2d::getInitialCondition(TState &x0){
@@ -43,11 +36,11 @@ void Pendulum2d::setInitialCondition(TState &x0){
   initialCondition = x0;
 }
 
-void Pendulum2d::setInputSequence(std::vector<TInput> seq){
-  this->inputSequence = seq;
+void Pendulum2d::setInputSequence(std::vector<TInput>* seq){
+  this->inputSequence = *seq;
 }
 
-double Pendulum2d::getEndTime(){
+double Pendulum2d::getEndTime() const{
   return inputSequence.size()*Ts;
 }
 
@@ -55,15 +48,19 @@ void Pendulum2d::print() const {
   std::cout << "m = " << m << ", M = " << M << ", L = " << L << std::endl;
 }
 
-double Pendulum2d::sumE(TState x){
+void Pendulum2d::printParameters() const {
+
+}
+
+double Pendulum2d::sumE(const TState x) const {
   return ePot(x)+eKin(x);
 }
 
-double Pendulum2d::ePot(TState x){
+double Pendulum2d::ePot(const TState x) const {
   return (1-cos(x[2]))*L*M*GRAVITY;
 }
 
-double Pendulum2d::eKin(TState x){
+double Pendulum2d::eKin(const TState x) const {
   double eC = 0.5*m*x[1]*x[1];
   double vMx = x[1]+x[3]*L*cos(x[2]);
   double vMy = x[3]*L*sin(x[2]);
@@ -71,7 +68,11 @@ double Pendulum2d::eKin(TState x){
   return eC+eM;
 }
 
-Pendulum2d::TInput Pendulum2d::getInput(double t){
+double Pendulum2d::getTotalMass() const {
+ return m+M; 
+}
+
+Pendulum2d::TInput Pendulum2d::getInput(const double t) const {
   int k = (int) t/Ts;
   return inputSequence[k];
 }

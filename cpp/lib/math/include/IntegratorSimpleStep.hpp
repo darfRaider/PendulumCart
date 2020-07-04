@@ -14,22 +14,24 @@ template<typename Vector, typename System>
 class IntegratorSimpleStep : public Integrator<Vector, System> {
 
  public:
-  IntegratorSimpleStep(System* sys, const double timestep);
+  IntegratorSimpleStep(System* sys, const double timestep, QProgressBar* pProgressBar = NULL);
   virtual ~IntegratorSimpleStep();
   double SomeMethod ();
-  void integrate(std::vector<Vector> &vec);
+  void integrate(std::vector<Vector> *vec);
   static void dfdt (const Vector &x, Vector &res, const double /*t*/);
  private:
   
-	double timestep;
+  double timestep;
   System* sys;
   boost::numeric::odeint::runge_kutta4< Vector > stepper;
+  QProgressBar* pProgressBar;
 };
 
 template <typename Vector, typename System>
-IntegratorSimpleStep<Vector, System>::IntegratorSimpleStep(System* sys, const double timestep) {
+IntegratorSimpleStep<Vector, System>::IntegratorSimpleStep(System* sys, const double timestep, QProgressBar* pProgressBar) {
   this->sys = sys;
-	this->timestep = timestep;
+  this->timestep = timestep;
+  this->pProgressBar = pProgressBar;
 }
 
 template <typename Vector, typename System>
@@ -37,27 +39,21 @@ IntegratorSimpleStep<Vector, System>::~IntegratorSimpleStep() {
 }
 
 template <typename Vector, typename System>
-double IntegratorSimpleStep<Vector, System>::SomeMethod (){
-  std::cout << "I am working" << std::endl;
-  return 2.0;
-}
-
-template <typename Vector, typename System>
-void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> &vec){
+void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> *vec){
 
   Vector x0;
   sys->getInitialCondition(x0);
   sys->print();
   double tMax = sys->getEndTime();
   auto F = [&](const Vector& x, Vector& res, const double t){
-    sys->dfdt(x, res, t);
+  sys->dfdt(x, res, t);
   };
-	
-  std::cout << "Integrating from 0 to " << tMax << " seconds.." << std::endl;
-
   for( double t=0.0 ; t<tMax ; t+= timestep){
 	stepper.do_step(F , x0 , t , timestep);
-	vec.push_back(x0);
+	(*vec).push_back(x0);
+	if(pProgressBar != NULL){
+	  pProgressBar->setValue((int) (100.0 * t / (tMax-timestep) ));
+	}
   }
 }
 
