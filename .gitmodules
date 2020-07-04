@@ -1,0 +1,3 @@
+[submodule "cpp/lib/VRepCPP"]
+	path = cpp/lib/VRepCPP
+	url = git@github.com:darfRaider/VRepCPP.git

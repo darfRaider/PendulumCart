@@ -15,7 +15,7 @@ include_directories(lib/mechanical/include
 add_subdirectory(lib/gui)
 add_subdirectory(lib/math)
 add_subdirectory(lib/mechanical)
-add_subdirectory(lib/vrep)
+add_subdirectory(lib/VRepCPP)
 
 # Google Test
 find_package(GTest QUIET)
