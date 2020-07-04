@@ -20,6 +20,7 @@ include_directories(lib/mechanical/include
 add_subdirectory(lib/gui)
 add_subdirectory(lib/math)
 add_subdirectory(lib/mechanical)
+add_subdirectory(lib/vrep)
 
 if(${GTest_FOUND})
   add_executable(Test test/main.cpp)
