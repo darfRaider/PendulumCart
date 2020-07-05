@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(DynamicSimulation)
 
+find_package(Boost REQUIRED)
+
 enable_testing()
 find_package(GTest QUIET)
 
@@ -12,10 +14,11 @@ endif()
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-include_directories(lib/mechanical/include
-					lib/math/include
-					lib/gui/include
-					lib/gui)
+include_directories(${Boost_INCLUDE_DIRS}
+                    lib/mechanical/include
+                    lib/math/include
+                    lib/gui/include
+                    lib/gui)
 
 add_subdirectory(lib/gui)
 add_subdirectory(lib/math)
