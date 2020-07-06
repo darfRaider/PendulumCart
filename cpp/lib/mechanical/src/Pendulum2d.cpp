@@ -8,31 +8,21 @@
 #include "Pendulum2d.hpp"
 #include <iostream>
 
-Pendulum2d::Pendulum2d(const double m, const double M, const double L, const double Ts):
+Pendulum2d::Pendulum2d(const double m, const double M, const double L):
   m(m),
   M(M),
-  L(L),
-  Ts(Ts)
+  L(L)
 { 
-  initialCondition = {0,0,0,0}; // Default initial condition
 }
 
 Pendulum2d::~Pendulum2d() { }
 
-void Pendulum2d::dfdt(const TState &x, TState &res, const double t, double u){
+void Pendulum2d::dfdt(const TState &x, TState &res, const double u, const double t){
   res[0] = x[1];
   res[1] = ((M*GRAVITY*sin(2*x[2]))/2.0 + M*L*pow(x[3],2)*sin(x[2]) + u)/(M*pow(sin(x[2]),2) + m);
   res[2] = x[3];
   res[3] = -(M*GRAVITY*sin(x[2]) + M*L*pow(x[3],2)*sin(2*x[2])/2.0 +
              GRAVITY*m*sin(x[2]) + u*cos(x[2]))/(L*(M*pow(sin(x[2]),2) + m));
-}
-
-void Pendulum2d::getInitialCondition(TState &x0){
-  x0 = initialCondition;
-}
-
-void Pendulum2d::setInitialCondition(TState &x0){
-  initialCondition = x0;
 }
 
 /*

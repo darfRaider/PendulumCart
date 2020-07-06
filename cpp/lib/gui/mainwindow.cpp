@@ -54,9 +54,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
   setGeometry(250, 250, 800, 500); // (hPos, vPos, width, height)
   setupRealtimeDataDemo(ui->customPlot);
-  Pendulum2d p(10, 10, 1, 0.2);
+  Pendulum2d p(10, 10, 1);
   Pendulum2d::TState x0 = {1,1,1,1};
-  p.setInitialCondition(x0);
+//  p.setInitialCondition(x0);
   setWindowTitle("QCustomPlot RealTimeDataPlot");
   statusBar()->clearMessage();
   ui->customPlot->replot();
@@ -238,7 +238,7 @@ void MainWindow::on_buttonIntegrate_clicked()
         double systemTimestep = ui->inputSimulationTimestep->text().toDouble();
         double integratorTimestep = ui->inputIntegratorTimestep->text().toDouble();
 
-        pPendulum = new Pendulum2d(m,M,L,systemTimestep);
+        pPendulum = new Pendulum2d(m,M,L);
         //pPendulum->setInputSequence(inputVector);
 		Pendulum2d::TState x0 = {0,0,0,0};
         pIntegrator = new IntegratorSimpleStep<Pendulum2d::TState>(x0, integratorTimestep);

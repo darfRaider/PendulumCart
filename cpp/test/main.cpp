@@ -25,16 +25,16 @@ TEST(IntegratorSimpleStep, zeroInput){
 }
 */
 TEST(Simulator, instanciating){
-  System<std::vector<double>,double>* p = new Pendulum2d(1,2,3,4);  
+  System<std::vector<double>,double>* p = new Pendulum2d(1,2,3);  
   Pendulum2d::TState x0 = {0,0,0,0};
   Integrator<Pendulum2d::TState>* integrator =  
 	new IntegratorSimpleStep<Pendulum2d::TState>(x0,0.001);
-  Simulator<Pendulum2d,IntegratorSimpleStep<Pendulum2d::TState>> *s = 
-	new Simulator<Pendulum2d,IntegratorSimpleStep<Pendulum2d::TState>>();
+  Simulator<System<std::vector<double>,double>,IntegratorSimpleStep<Pendulum2d::TState>> *s = 
+	new Simulator<Pendulum2d::TSystem,IntegratorSimpleStep<Pendulum2d::TState>>(p);
 }
 
 TEST(System, SystemAndPendulumMass){
-  System<std::vector<double>,double>* s = new Pendulum2d(1,2,3,4);  
+  System<std::vector<double>,double>* s = new Pendulum2d(1,2,3);  
   EXPECT_EQ(3,s->getTotalMass()); 
 }
 
