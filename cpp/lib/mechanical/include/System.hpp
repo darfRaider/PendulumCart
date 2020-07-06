@@ -1,8 +1,11 @@
-template <typename type_state, typename type_input>
+#ifndef SYSTEM_HPP
+#define SYSTEM_HPP
+
+template <typename StateType, typename InputType>
 class System {
  public:
-  typedef type_state TState;
-  typedef type_input TInput;
+  typedef StateType TState;
+  typedef InputType TInput;
   struct systemParameters;
   
   // Compute derivative of nonlinear system 
@@ -17,8 +20,8 @@ class System {
   
   virtual void getInitialCondition(TState& x0) = 0;
   
-//  virtual double getEndTime() const = 0;
-  
   virtual void printParameters() const = 0;
   virtual void print() const = 0;
 };
+
+#endif

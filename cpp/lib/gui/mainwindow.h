@@ -104,7 +104,7 @@ private:
   static bool entriesValidityTest[N_TEST_FIELDS];
 
   Pendulum2d* pPendulum;
-  Integrator<Pendulum2d::TState, Pendulum2d> * pIntegrator;
+  Integrator<Pendulum2d::TState> * pIntegrator;
 };
 
 #endif // MAINWINDOW_H

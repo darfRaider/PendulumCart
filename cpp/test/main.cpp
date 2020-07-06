@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include "IntegratorSimpleStep.hpp"
 #include "Pendulum2d.hpp"
+#include "Simulator.hpp"
 
+/*
 TEST(IntegratorSimpleStep, zeroInput){
   std::vector<Pendulum2d::TInput> input;
   for(int i = 0; i < 100; i++){
@@ -12,14 +14,23 @@ TEST(IntegratorSimpleStep, zeroInput){
   Pendulum2d::TState x0 = {0,0,0,0};
   p->setInitialCondition(x0);
   std::vector<Pendulum2d::TState>* res = new std::vector<Pendulum2d::TState>;
-  Integrator<Pendulum2d::TState, Pendulum2d>* integrator = 
-	new IntegratorSimpleStep<Pendulum2d::TState,Pendulum2d>(p,0.00132535);
+  Integrator<Pendulum2d::TState>* integrator = 
+	new IntegratorSimpleStep<Pendulum2d::TState>(x0,0.00132535);
   integrator->integrate(res);
  
   int nMax = res->size(); 
   for(int i = 0; i < 4; i++){
 	EXPECT_EQ((*res)[nMax-1][i],0);
   }
+}
+*/
+TEST(Simulator, instanciating){
+  System<std::vector<double>,double>* p = new Pendulum2d(1,2,3,4);  
+  Pendulum2d::TState x0 = {0,0,0,0};
+  Integrator<Pendulum2d::TState>* integrator =  
+	new IntegratorSimpleStep<Pendulum2d::TState>(x0,0.001);
+  Simulator<Pendulum2d,IntegratorSimpleStep<Pendulum2d::TState>> *s = 
+	new Simulator<Pendulum2d,IntegratorSimpleStep<Pendulum2d::TState>>();
 }
 
 TEST(System, SystemAndPendulumMass){

@@ -18,11 +18,13 @@ include_directories(${Boost_INCLUDE_DIRS}
                     lib/mechanical/include
                     lib/math/include
                     lib/gui/include
-                    lib/gui)
+                    lib/gui
+					lib/simulator/include)
 
 add_subdirectory(lib/gui)
 add_subdirectory(lib/math)
 add_subdirectory(lib/mechanical)
+add_subdirectory(lib/simulator)
 add_subdirectory(lib/vrep)
 
 if(${GTest_FOUND})
