@@ -44,7 +44,8 @@ void IntegratorSimpleStep<Vector, System>::integrate (std::vector<Vector> *vec){
   Vector x0;
   sys->getInitialCondition(x0);
   sys->print();
-  double tMax = sys->getEndTime();
+  // TODO: Fix tmax!
+  double tMax = 10;
   auto F = [&](const Vector& x, Vector& res, const double t){
   sys->dfdt(x, res, t);
   };

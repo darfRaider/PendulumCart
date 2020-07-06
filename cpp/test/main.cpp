@@ -8,7 +8,7 @@ TEST(IntegratorSimpleStep, zeroInput){
 	input.push_back(0);
   }
   Pendulum2d* p = new Pendulum2d(1,2,3,0.05);
-  p->setInputSequence(&input);
+//  p->setInputSequence(&input);
   Pendulum2d::TState x0 = {0,0,0,0};
   p->setInitialCondition(x0);
   std::vector<Pendulum2d::TState>* res = new std::vector<Pendulum2d::TState>;

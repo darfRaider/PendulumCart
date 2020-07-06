@@ -19,8 +19,7 @@ Pendulum2d::Pendulum2d(const double m, const double M, const double L, const dou
 
 Pendulum2d::~Pendulum2d() { }
 
-void Pendulum2d::dfdt(const TState &x, TState &res, const double t){
-  double u = getInput(t);
+void Pendulum2d::dfdt(const TState &x, TState &res, const double t, double u){
   res[0] = x[1];
   res[1] = ((M*GRAVITY*sin(2*x[2]))/2.0 + M*L*pow(x[3],2)*sin(x[2]) + u)/(M*pow(sin(x[2]),2) + m);
   res[2] = x[3];
@@ -36,6 +35,7 @@ void Pendulum2d::setInitialCondition(TState &x0){
   initialCondition = x0;
 }
 
+/*
 void Pendulum2d::setInputSequence(std::vector<TInput>* seq){
   this->inputSequence = *seq;
 }
@@ -43,6 +43,7 @@ void Pendulum2d::setInputSequence(std::vector<TInput>* seq){
 double Pendulum2d::getEndTime() const{
   return inputSequence.size()*Ts;
 }
+*/
 
 void Pendulum2d::print() const {
   std::cout << "m = " << m << ", M = " << M << ", L = " << L << std::endl;
@@ -72,7 +73,9 @@ double Pendulum2d::getTotalMass() const {
  return m+M; 
 }
 
+/*
 Pendulum2d::TInput Pendulum2d::getInput(const double t) const {
   int k = (int) t/Ts;
   return inputSequence[k];
 }
+*/
