@@ -24,7 +24,7 @@ class Pendulum2d : protected Physics, public SystemType {
   Pendulum2d(const double m, const double M, const double L);
   virtual ~Pendulum2d();
 
-  void dfdt(const TState &x, TState &res, const double u = 0, const double t = 0);
+  void dfdt(const TState &x, TState &res, const double u = 0, const double t = 0) const;
 
   void print() const;
   void printParameters() const;

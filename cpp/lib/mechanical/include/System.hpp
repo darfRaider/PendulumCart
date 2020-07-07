@@ -9,7 +9,7 @@ class System {
   struct systemParameters;
   
   // Compute derivative of nonlinear system 
-  virtual void dfdt(const TState &x, TState &res, const double t, const double u = 0) = 0;
+  virtual void dfdt(const TState &x, TState &res, const double t, const double u = 0) const = 0;
   
   // Compute energies  
   virtual double sumE(const TState x) const = 0;

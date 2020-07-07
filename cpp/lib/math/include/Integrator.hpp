@@ -13,7 +13,7 @@
 template<typename Vector>
 class Integrator {
   public:
-  virtual void integrate(std::vector<Vector> *vec) = 0;
+  virtual void integrate(double tMax, std::vector<Vector> *vec) = 0;
 };
 
 #endif /* INCLUDE_INTEGRATOR_HPP_ */

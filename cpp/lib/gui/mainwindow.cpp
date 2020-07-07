@@ -242,7 +242,7 @@ void MainWindow::on_buttonIntegrate_clicked()
         //pPendulum->setInputSequence(inputVector);
 		Pendulum2d::TState x0 = {0,0,0,0};
         pIntegrator = new IntegratorSimpleStep<Pendulum2d::TState>(x0, integratorTimestep);
-        pIntegrator->integrate(resvec);
+        pIntegrator->integrate(10.0, resvec);
     }
 }
 

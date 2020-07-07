@@ -3,7 +3,36 @@
 #include "Pendulum2d.hpp"
 #include "Simulator.hpp"
 
-/*
+TEST(SimulatorTest, instanciating){
+  typedef std::vector<double> TState;
+  typedef double TInput;
+  typedef IntegratorSimpleStep<TState> TIntegrator; 
+  typedef System<TState, TInput> TSystem;  
+  typedef Simulator<TSystem, TIntegrator> TSimulator;
+  typedef typename TSimulator::config TConfig; 
+  TSystem* p = new Pendulum2d(1,2,3);  
+
+  TConfig cfg;  
+  cfg.dT_integrator = 0.001;
+  cfg.tSimulation = 10; 
+  cfg.x0 = {0,0,0,0};
+
+  TSimulator *s = new TSimulator(p, cfg); 
+}
+
+TEST(System, SystemAndPendulumMass){
+  System<std::vector<double>,double>* s = new Pendulum2d(1,2,3);  
+  EXPECT_EQ(3,s->getTotalMass()); 
+}
+
+int main(int argc, char* argv[]){
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
+
+
+
+  /*
 TEST(IntegratorSimpleStep, zeroInput){
   std::vector<Pendulum2d::TInput> input;
   for(int i = 0; i < 100; i++){
@@ -24,21 +53,3 @@ TEST(IntegratorSimpleStep, zeroInput){
   }
 }
 */
-TEST(Simulator, instanciating){
-  System<std::vector<double>,double>* p = new Pendulum2d(1,2,3);  
-  Pendulum2d::TState x0 = {0,0,0,0};
-  Integrator<Pendulum2d::TState>* integrator =  
-	new IntegratorSimpleStep<Pendulum2d::TState>(x0,0.001);
-  Simulator<System<std::vector<double>,double>,IntegratorSimpleStep<Pendulum2d::TState>> *s = 
-	new Simulator<Pendulum2d::TSystem,IntegratorSimpleStep<Pendulum2d::TState>>(p);
-}
-
-TEST(System, SystemAndPendulumMass){
-  System<std::vector<double>,double>* s = new Pendulum2d(1,2,3);  
-  EXPECT_EQ(3,s->getTotalMass()); 
-}
-
-int main(int argc, char* argv[]){
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
