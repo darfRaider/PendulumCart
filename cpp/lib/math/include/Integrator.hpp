@@ -16,8 +16,27 @@ class Integrator {
   typedef typename TMechanicalModel::TState TState;
   typedef typename TMechanicalModel::TInput TInput;
   typedef typename TMechanicalModel::TSystem TSystem; 
-  virtual void integrate(double tMax, std::vector<TState> *vec) = 0;
+  
+  virtual void integrate(const double tMax, 
+						 std::vector<TState> *vec) = 0;
+  
+  virtual void integrate(const double t1, 
+						 const double t2, 
+						std::vector<TState> *vec) = 0;
+  
+  virtual void integrate(const double tMax, 
+						 const std::vector<TInput> *input, 
+						 const double Tsampling, 
+						 std::vector<TState> *vec) = 0;
+  
+  virtual void integrate(const double t1,
+						 const double t2, 
+						 const std::vector<TInput> *input, 
+						 const double Tsampling, 
+						 std::vector<TState> *vec) = 0;
+  
   void setInitialCondition(TState x0); 
+  
   TState x0; 
   const TSystem* sys;
 };
