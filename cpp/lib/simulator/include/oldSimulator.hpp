@@ -2,13 +2,12 @@
 #define SIMULATOR_HPP
 #include <vector>
 #include <iostream>
-template<typename TMechanicalModel, typename TIntegrator>
+template<typename System, typename TIntegrator>
 class Simulator {
 
  public:
-  typedef typename TMechanicalModel::System TSystem;
-  typedef typename TSystem::TState TState;
-  typedef typename TSystem::TInput TInput;
+  typedef typename System::TState TState;
+  typedef typename System::TInput TInput;
   typedef typename std::vector<TInput> TInputSequence;
    
   const static int UNASSIGNED = -1;
@@ -20,7 +19,7 @@ class Simulator {
 	TState x0;
   };	
   
-  Simulator(TSystem* sys, config& cfg);
+  Simulator(System* sys, config& cfg);
   ~Simulator();
   void setInputSequence(TInputSequence* inputSequence, double Ts);
   
@@ -29,7 +28,7 @@ private:
   
   config cfg;
 
-  const TSystem* sys;
+  const System* sys;
   TIntegrator* integrator = 0;
   TInputSequence* inputSequence = 0;
   double Ts_input;
@@ -37,28 +36,28 @@ private:
 
 // Public functions implementation
 
-template<typename TMechanicalModel, typename Integrator>
-Simulator<TMechanicalModel, Integrator>::Simulator(TSystem* sys, config& cfg) : sys(sys), cfg(cfg) {
+template<typename System, typename Integrator>
+Simulator<System, Integrator>::Simulator(System* sys, config& cfg) : sys(sys), cfg(cfg) {
   std::vector<TState>* res = new std::vector<TState>();  
   simulate(res);   
 }
 
-template<typename TMechanicalModel, typename Integrator>
-Simulator<TMechanicalModel, Integrator>::~Simulator() {
+template<typename System, typename Integrator>
+Simulator<System, Integrator>::~Simulator() {
   if(integrator != 0)
 	delete integrator;
 }
 
-template<typename TMechanicalModel, typename Integrator>
-void Simulator<TMechanicalModel, Integrator>::setInputSequence(TInputSequence* inputSequence, double Ts){
+template<typename System, typename Integrator>
+void Simulator<System, Integrator>::setInputSequence(TInputSequence* inputSequence, double Ts){
   this->inputSequence = inputSequence;
   this->Ts_input = Ts;
 }
 
 // Private functions impelemntation
 
-template<typename TMechanicalModel, typename Integrator>
-void Simulator<TMechanicalModel, Integrator>::simulate(std::vector<TState>* res){
+template<class System, typename Integrator>
+void Simulator<System, Integrator>::simulate(std::vector<TState>* res){
   // Invalid cases, return
   if((inputSequence == 0 && cfg.tSimulation == UNASSIGNED) || 
 	  cfg.dT_integrator == UNASSIGNED)

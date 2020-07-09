@@ -2,20 +2,28 @@
 #include "IntegratorSimpleStep.hpp"
 #include "Pendulum2d.hpp"
 #include "Simulator.hpp"
+#include "Mechanical.hpp"
 
 TEST(SimulatorTest, instanciating){
-  typedef std::vector<double> TState;
-  typedef double TInput;
-  typedef IntegratorSimpleStep<TState> TIntegrator; 
-  typedef System<TState, TInput> TSystem;  
-  typedef Simulator<TSystem, TIntegrator> TSimulator;
-  typedef typename TSimulator::config TConfig; 
-  TSystem* p = new Pendulum2d(1,2,3);  
+  typedef Pendulum2d TSelectedSystem;
 
+  typedef typename TSelectedSystem::TState TState;
+  typedef typename TSelectedSystem::TInput TInput;
+
+  typedef IntegratorSimpleStep<TState> TIntegrator; 
+  
+  typedef Simulator<TSelectedSystem, TIntegrator> TSimulator;
+  typedef typename TSimulator::config TConfig; 
+  
+  
+  Pendulum2d* p = new Pendulum2d(1,2,3);  
+  TState x0 = {1,2,3,4};
+  TState res;
+  
   TConfig cfg;  
   cfg.dT_integrator = 0.001;
   cfg.tSimulation = 10; 
-  cfg.x0 = {0,0,0,0};
+  cfg.x0 = x0; 
 
   TSimulator *s = new TSimulator(p, cfg); 
 }
