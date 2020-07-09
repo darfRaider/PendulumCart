@@ -103,8 +103,8 @@ private:
   static bool isRunning;
   static bool entriesValidityTest[N_TEST_FIELDS];
 
-  Pendulum2d* pPendulum;
-  Integrator<Pendulum2d> * pIntegrator;
+//  Pendulum2d* pPendulum;
+//  Integrator<Pendulum2d> * pIntegrator;
 };
 
 #endif // MAINWINDOW_H

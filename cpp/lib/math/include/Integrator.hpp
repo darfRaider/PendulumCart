@@ -18,8 +18,9 @@ class Integrator {
   typedef typename TMechanicalModel::TInput TInput;
   typedef typename TMechanicalModel::TSystem TSystem; 
   virtual void integrate(double tMax, std::vector<TState> *vec) = 0;
+
+  const TSystem* sys;
   private:
-   TSystem* sys;
 };
 
 #endif /* INCLUDE_INTEGRATOR_HPP_ */

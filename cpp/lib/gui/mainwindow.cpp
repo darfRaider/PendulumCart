@@ -238,11 +238,11 @@ void MainWindow::on_buttonIntegrate_clicked()
         double systemTimestep = ui->inputSimulationTimestep->text().toDouble();
         double integratorTimestep = ui->inputIntegratorTimestep->text().toDouble();
 
-        pPendulum = new Pendulum2d(m,M,L);
+        //pPendulum = new Pendulum2d(m,M,L);
         //pPendulum->setInputSequence(inputVector);
-		Pendulum2d::TState x0 = {0,0,0,0};
-        pIntegrator = new IntegratorSimpleStep<Pendulum2d>(x0, integratorTimestep);
-        pIntegrator->integrate(10.0, resvec);
+		//Pendulum2d::TState x0 = {0,0,0,0};
+        //pIntegrator = new IntegratorSimpleStep<Pendulum2d>(x0, integratorTimestep);
+        //pIntegrator->integrate(10.0, resvec);
     }
 }
 

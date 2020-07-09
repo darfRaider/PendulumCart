@@ -64,7 +64,7 @@ void Simulator<TMechanicalModel, Integrator>::simulate(std::vector<TState>* res)
 
 
   // TODO: feed in dfdt in new Integrator 
-  integrator = new Integrator(cfg.x0, cfg.dT_integrator);
+  integrator = new Integrator(sys, cfg.x0, cfg.dT_integrator);
   auto F = [&](const TState& x, TState& res, const double t){
 	sys->dfdt(x, res, t);
   };

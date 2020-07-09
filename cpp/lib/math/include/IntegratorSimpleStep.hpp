@@ -13,9 +13,9 @@
 template<typename TMechanicalSystem>
 class IntegratorSimpleStep : public Integrator<TMechanicalSystem> {
   typedef typename TMechanicalSystem::TState Vector;
+  typedef typename TMechanicalSystem::System TSystem; 
  public:
-  IntegratorSimpleStep(Vector x0, const double timestep);
-  IntegratorSimpleStep(Vector x0, const double timestep, void (*pFun)(const Vector&, Vector, const double, const double));
+  IntegratorSimpleStep(const TSystem* sys, Vector x0, const double timestep);
   virtual ~IntegratorSimpleStep();
   void integrate(double tMax, std::vector<Vector> *vec);
   static void dfdt (const Vector &x, Vector &res, const double /*t*/);
@@ -28,17 +28,10 @@ class IntegratorSimpleStep : public Integrator<TMechanicalSystem> {
 };
 
 template <typename TMechanicalSystem>
-IntegratorSimpleStep<TMechanicalSystem>::IntegratorSimpleStep(Vector x0, const double timestep, void (*pFun)(const Vector&, Vector, const double, const double)) {
-  this->pFun = pFun;
+IntegratorSimpleStep<TMechanicalSystem>::IntegratorSimpleStep(const TSystem* sys, Vector x0, const double timestep) {
   this->timestep = timestep;
   this->x0 = x0;
-
-}
-
-template <typename TMechanicalSystem>
-IntegratorSimpleStep<TMechanicalSystem>::IntegratorSimpleStep(Vector x0, const double timestep) {
-  this->timestep = timestep;
-  this->x0 = x0;
+  this->sys = sys;
 }
 
 template <typename TMechanicalSystem>

@@ -2,7 +2,6 @@
 #include "IntegratorSimpleStep.hpp"
 #include "Pendulum2d.hpp"
 #include "Simulator.hpp"
-#include "Mechanical.hpp"
 
 TEST(SimulatorTest, instanciating){
   typedef Pendulum2d TSelectedSystem;
