@@ -9,11 +9,17 @@
 #define INCLUDE_INTEGRATOR_HPP_
 #include <iostream>
 #include <boost/numeric/odeint.hpp>
+#include "System.hpp"
 
-template<typename Vector>
+template<typename TMechanicalModel>
 class Integrator {
   public:
-  virtual void integrate(double tMax, std::vector<Vector> *vec) = 0;
+  typedef typename TMechanicalModel::TState TState;
+  typedef typename TMechanicalModel::TInput TInput;
+  typedef typename TMechanicalModel::TSystem TSystem; 
+  virtual void integrate(double tMax, std::vector<TState> *vec) = 0;
+  private:
+   TSystem* sys;
 };
 
 #endif /* INCLUDE_INTEGRATOR_HPP_ */

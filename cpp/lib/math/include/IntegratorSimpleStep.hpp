@@ -10,9 +10,9 @@
 #include "Integrator.hpp"
 #include <functional>
 #include <iostream>
-template<typename Vector>
-class IntegratorSimpleStep : public Integrator<Vector> {
-
+template<typename TMechanicalSystem>
+class IntegratorSimpleStep : public Integrator<TMechanicalSystem> {
+  typedef typename TMechanicalSystem::TState Vector;
  public:
   IntegratorSimpleStep(Vector x0, const double timestep);
   IntegratorSimpleStep(Vector x0, const double timestep, void (*pFun)(const Vector&, Vector, const double, const double));
@@ -27,26 +27,26 @@ class IntegratorSimpleStep : public Integrator<Vector> {
   boost::numeric::odeint::runge_kutta4< Vector > stepper;
 };
 
-template <typename Vector>
-IntegratorSimpleStep<Vector>::IntegratorSimpleStep(Vector x0, const double timestep, void (*pFun)(const Vector&, Vector, const double, const double)) {
+template <typename TMechanicalSystem>
+IntegratorSimpleStep<TMechanicalSystem>::IntegratorSimpleStep(Vector x0, const double timestep, void (*pFun)(const Vector&, Vector, const double, const double)) {
   this->pFun = pFun;
   this->timestep = timestep;
   this->x0 = x0;
 
 }
 
-template <typename Vector>
-IntegratorSimpleStep<Vector>::IntegratorSimpleStep(Vector x0, const double timestep) {
+template <typename TMechanicalSystem>
+IntegratorSimpleStep<TMechanicalSystem>::IntegratorSimpleStep(Vector x0, const double timestep) {
   this->timestep = timestep;
   this->x0 = x0;
 }
 
-template <typename Vector>
-IntegratorSimpleStep<Vector>::~IntegratorSimpleStep() {
+template <typename TMechanicalSystem>
+IntegratorSimpleStep<TMechanicalSystem>::~IntegratorSimpleStep() {
 }
 
-template <typename Vector>
-void IntegratorSimpleStep<Vector>::integrate (double tMax, std::vector<Vector> *vec){
+template <typename TMechanicalSystem>
+void IntegratorSimpleStep<TMechanicalSystem>::integrate (double tMax, std::vector<Vector> *vec){
   std::cout << "Inside integrator" << std::endl;
   Vector x0;
   /*auto F = [&](const Vector& x, Vector& res, const double t){

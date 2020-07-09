@@ -10,7 +10,7 @@ TEST(SimulatorTest, instanciating){
   typedef typename TSelectedSystem::TState TState;
   typedef typename TSelectedSystem::TInput TInput;
 
-  typedef IntegratorSimpleStep<TState> TIntegrator; 
+  typedef IntegratorSimpleStep<TSelectedSystem> TIntegrator; 
   
   typedef Simulator<TSelectedSystem, TIntegrator> TSimulator;
   typedef typename TSimulator::config TConfig; 
@@ -19,13 +19,14 @@ TEST(SimulatorTest, instanciating){
   Pendulum2d* p = new Pendulum2d(1,2,3);  
   TState x0 = {1,2,3,4};
   TState res;
-  
+  std::vector<TState>* resvec = new std::vector<TState>;
   TConfig cfg;  
   cfg.dT_integrator = 0.001;
   cfg.tSimulation = 10; 
   cfg.x0 = x0; 
 
   TSimulator *s = new TSimulator(p, cfg); 
+  s->simulate(resvec);
 }
 
 TEST(System, SystemAndPendulumMass){

@@ -39,8 +39,6 @@ private:
 
 template<typename TMechanicalModel, typename Integrator>
 Simulator<TMechanicalModel, Integrator>::Simulator(TSystem* sys, config& cfg) : sys(sys), cfg(cfg) {
-  std::vector<TState>* res = new std::vector<TState>();  
-  simulate(res);   
 }
 
 template<typename TMechanicalModel, typename Integrator>
