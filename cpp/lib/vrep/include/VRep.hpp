@@ -21,10 +21,23 @@ extern "C" {
 
 class VRep {
 public:
+  /**
+   * @brief Default constructor.
+   *
+   * @param port Port to V-REP client
+   * @param ip IP of V-REP client
+   */
     VRep(int port = 19997, const char* ip = "127.0.0.1");
     virtual ~VRep();
     
+	/**
+	 * @brief Connect to V-REP client.
+	 */
     void connect();
+
+	/**
+	 * @brief Disconnect from V-REP client.
+	 */
     void disconnect();
     
     int getClientID();
