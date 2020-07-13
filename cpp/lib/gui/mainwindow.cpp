@@ -14,8 +14,7 @@
 **  GNU General Public License for more details.                          **
 **                                                                        **
 **  You should have received a copy of the GNU General Public License     **
-**  along with this program.  If not, see http://www.gnu.org/licenses/.   **
-**                                                                        **
+**  along with this program.  If not, see http://www.gnu.org/licenses/.   ** **                                                                        **
 ****************************************************************************
 **           Author: Emanuel Eichhammer                                   **
 **  Website/Contact: http://www.qcustomplot.com/                          **
@@ -155,10 +154,7 @@ void MainWindow::realtimeDataSlot()
 
 void MainWindow::plotData(std::vector<double>& x, std::vector<double>& y)
 {
-/*    for(double t  = 0; t < 10; t+=0.01){
-        ui->customPlot->graph(0)->addData(t,sin(t*2.0*3.1315/10.0));
-    }
-  */
+  ui->customPlot->graph(0)->data()->clear(); 
   double xMin, xMax, yMin, yMax;
   xMin = std::numeric_limits<double>::max();
   xMax = std::numeric_limits<double>::min();
@@ -275,6 +271,8 @@ void MainWindow::on_buttonIntegrate_clicked()
 		std::vector<double>* state = pSimulator->getStateVector(1);
 		plotData(*tout, *state);	
 		int n = (*resvec).size();
+		delete resvec;
+		delete tout;
 		//pPendulum->setInputSequence(inputVector);
         //pIntegrator = new IntegratorSimpleStep<Pendulum2d>(x0, integratorTimestep);
         //pIntegrator->integrate(10.0, resvec);
