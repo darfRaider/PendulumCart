@@ -24,13 +24,15 @@ class IntegratorSimpleStep : public Integrator<TMechanicalSystem> {
   
   void integrate(const double t0,
 	  const double t1, 
-	  std::vector<TState> *vec);
+	  std::vector<TState> *vec,
+	  std::vector<double>* tout = NULL);
 
   void integrate(const double t0,
 	  const double t1, 
 	  std::vector<TState> *vec,
 	  std::vector<TInput> *input,
-	  double Tsampling);
+	  double Tsampling,
+	  std::vector<double>* tout = NULL);
  
  private:
   double timestep;
@@ -51,33 +53,47 @@ IntegratorSimpleStep<TMechanicalSystem>::~IntegratorSimpleStep() {
 
 template <typename TMechanicalSystem>
 void IntegratorSimpleStep<TMechanicalSystem>::
-integrate (const double t1, const double t2, std::vector<TState> *vec) {
+integrate (const double t1, const double t2, std::vector<TState> *vec, std::vector<double>* tout) {
   TState x0 = this->x0;
   auto F = [&](const TState& x, TState& res, const double t){
     this->sys->dfdt(x, res, t);
   };
+  (*vec).push_back(x0);
+  if(tout != NULL)
+   (*tout).push_back(0);	
+  for(int i = 0; i < 4; i++){
+	std::cout << x0[i] << ",";
+  }
+  std::cout << std::endl;
   for( double t=t1 ; t<t2 ; t+= timestep){
 	stepper.do_step(F , x0 , t , timestep);
 	(*vec).push_back(x0);
+	if(tout != NULL)
+	  (*tout).push_back(t+timestep);
   }
 }
 
 template <typename TMechanicalSystem>
 void IntegratorSimpleStep<TMechanicalSystem>::
 integrate(const double t1, const double t2, std::vector<TState> *vec,
-	std::vector<TInput>* input, double Tsampling) {
+	std::vector<TInput>* input, double Tsampling, std::vector<double>* tout) {
   this->setInputSequence(input, Tsampling);
   TState x0 = this->x0;
-   
+  (*vec).push_back(x0); 
+  if(tout != NULL)
+   (*tout).push_back(0);	
+
   auto F = [&](const TState& x, TState& res, const double t){
 	TInput u;
 	this->getInput(t,u);	
-  	this->sys->dfdt(x, res, u, t);
+  	this->sys->dfdt(x, res, t, u);
   };
   
   for( double t=t1 ; t<t2 ; t+= timestep){
 	stepper.do_step(F , x0 , t , timestep);
 	(*vec).push_back(x0);
+	if(tout != NULL)
+	  (*tout).push_back(t+timestep);
   }
 }
   

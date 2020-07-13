@@ -56,7 +56,7 @@
 #include "util.hpp"
 #include "Pendulum2d.hpp"
 #include "IntegratorSimpleStep.hpp"
-
+#include "Simulator.hpp"
 namespace Ui {
 class MainWindow;
 }
@@ -69,7 +69,7 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
   void setupRealtimeDataDemo(QCustomPlot *customPlot);
-  void plotData();
+  void plotData(std::vector<double>& x, std::vector<double>& y);
 
 private slots:
   void realtimeDataSlot();
@@ -103,8 +103,10 @@ private:
   static bool isRunning;
   static bool entriesValidityTest[N_TEST_FIELDS];
 
-//  Pendulum2d* pPendulum;
-//  Integrator<Pendulum2d> * pIntegrator;
+
+  Pendulum2d* pPendulum;
+  Simulator<Pendulum2d, IntegratorSimpleStep<Pendulum2d>>* pSimulator;
+  //  Integrator<Pendulum2d> * pIntegrator;
 };
 
 #endif // MAINWINDOW_H

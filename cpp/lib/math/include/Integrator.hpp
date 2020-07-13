@@ -31,13 +31,15 @@ class Integrator {
    */
   virtual void integrate(const double t1, 
 						 const double t2, 
-						 std::vector<TState> *vec) = 0;
+						 std::vector<TState> *vec,
+						 std::vector<double>* tout = NULL) = 0;
 
   virtual void integrate(const double t1, 
 						 const double t2, 
 						 std::vector<TState> *vec,
 						 std::vector<TInput> *input,
-						 double Tsampling) = 0;
+						 double Tsampling,
+						 std::vector<double>* tout = NULL) = 0;
 
   void setInitialCondition(TState x0); 
   

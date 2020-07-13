@@ -19,7 +19,7 @@ Pendulum2d::Pendulum2d(const double m, const double M, const double L):
 
 Pendulum2d::~Pendulum2d() { }
 
-void Pendulum2d::dfdt(const TState &x, TState &res, const double u, const double t) const {
+void Pendulum2d::dfdt(const TState &x, TState &res, const double t, const double u) const {
   res[0] = x[1];
   res[1] = ((M*GRAVITY*sin(2*x[2]))/2.0 + M*L*pow(x[3],2)*sin(x[2]) + u)/(M*pow(sin(x[2]),2) + m);
   res[2] = x[3];

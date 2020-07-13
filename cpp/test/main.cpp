@@ -2,15 +2,7 @@
 #include "IntegratorSimpleStep.hpp"
 #include "Pendulum2d.hpp"
 #include "Simulator.hpp"
-#include "Matrix.h"
 
-TEST(MatrixTest, generalUage){
-  const int n = 2;
-  const int m = 2;
-//  Matrix mat(m,n);
-  double data[] = {1,2,3,4};
- // mat.data = data;
-}
 
 
 TEST(SimulatorTest, instanciating){

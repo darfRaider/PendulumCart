@@ -23,8 +23,8 @@ class Simulator {
   Simulator(TSystem* sys, config& cfg);
   ~Simulator();
   void setInputSequence(TInputSequence* inputSequence, double Ts);
-  
-  void simulate(std::vector<TState>* res); 
+  std::vector<double>* getStateVector(int stateNr); 
+  void simulate(std::vector<TState>* res, std::vector<double>* tout = NULL); 
 private:
   
   config cfg;
@@ -33,6 +33,7 @@ private:
   TIntegrator* integrator = 0;
   TInputSequence* inputSequence = 0;
   double Ts_input;
+  std::vector<TState>* result = NULL;
 };
 
 // Public functions implementation
@@ -48,6 +49,18 @@ Simulator<TMechanicalModel, Integrator>::~Simulator() {
 }
 
 template<typename TMechanicalModel, typename Integrator>
+std::vector<double>* Simulator<TMechanicalModel, Integrator>::getStateVector(int stateNr) {
+  std::vector<double>* state = new std::vector<double>();
+  if(result == NULL){
+	return state;
+  }
+  for(int i = 0; i < (*result).size(); i++){
+	(*state).push_back((*result)[i][stateNr]);
+  }
+  return state;
+}
+
+template<typename TMechanicalModel, typename Integrator>
 void Simulator<TMechanicalModel, Integrator>::setInputSequence(TInputSequence* inputSequence, double Ts){
   this->inputSequence = inputSequence;
   this->Ts_input = Ts;
@@ -56,9 +69,13 @@ void Simulator<TMechanicalModel, Integrator>::setInputSequence(TInputSequence* i
 // Private functions impelemntation
 
 template<typename TMechanicalModel, typename Integrator>
-void Simulator<TMechanicalModel, Integrator>::simulate(std::vector<TState>* res){
+void Simulator<TMechanicalModel, Integrator>::simulate(std::vector<TState>* res, std::vector<double>* tout){
   integrator = new Integrator(sys, cfg.x0, cfg.dT_integrator);
-  integrator->integrate(0, cfg.tSimulation, res);
+  if(tout == NULL)
+	integrator->integrate(0, cfg.tSimulation, res);
+  else
+	integrator->integrate(0, cfg.tSimulation, res, tout);
+  this->result = res; 
   delete integrator;  
 }
 

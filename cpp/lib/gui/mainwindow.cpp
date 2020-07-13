@@ -153,12 +153,33 @@ void MainWindow::realtimeDataSlot()
   }
 }
 
-void MainWindow::plotData()
+void MainWindow::plotData(std::vector<double>& x, std::vector<double>& y)
 {
-    for(double t  = 0; t < 10; t+=0.01){
+/*    for(double t  = 0; t < 10; t+=0.01){
         ui->customPlot->graph(0)->addData(t,sin(t*2.0*3.1315/10.0));
     }
-         ui->customPlot->xAxis->setRange(0, 10, Qt::AlignLeft);
+  */
+  double xMin, xMax, yMin, yMax;
+  xMin = std::numeric_limits<double>::max();
+  xMax = std::numeric_limits<double>::min();
+  yMin = std::numeric_limits<double>::max();
+  yMax = std::numeric_limits<double>::min();
+   
+  int N = x.size();
+  for(int i = 0; i < N; i++){
+	ui->customPlot->graph(0)->addData(x[i],y[i]);
+	if(x[i] < xMin)
+	  xMin = x[i];
+	if(x[i] > xMax)
+	  xMax = x[i];
+	if(y[i] < yMin)
+	  yMin = y[i];
+	if(y[i] > yMax)
+	  yMax = y[i];
+  }
+
+  ui->customPlot->xAxis->setRange(xMin, xMax, Qt::AlignLeft);
+  ui->customPlot->yAxis->setRange(yMin, yMax);
   ui->customPlot->replot();
  //   ui->customPlot->replot();
   /*
@@ -231,18 +252,33 @@ void MainWindow::on_buttonIntegrate_clicked()
             (*inputVector).push_back(zero);
         }
         std::vector<Pendulum2d::TState>* resvec = new std::vector<Pendulum2d::TState>;
-        double M = ui->inputMassPendulum->text().toDouble();
+		std::vector<double>* tout = new std::vector<double>();
+        
+		double M = ui->inputMassPendulum->text().toDouble();
         double m = ui->inputMassCart->text().toDouble();
         double L = ui->inputLengthPendulum->text().toDouble();
+
+		// TODO: use time from gui
+		double simulationTime = 10; 
 
         double systemTimestep = ui->inputSimulationTimestep->text().toDouble();
         double integratorTimestep = ui->inputIntegratorTimestep->text().toDouble();
 
-        //pPendulum = new Pendulum2d(m,M,L);
-        //pPendulum->setInputSequence(inputVector);
-		//Pendulum2d::TState x0 = {0,0,0,0};
+        pPendulum = new Pendulum2d(m,M,L);
+		Simulator<Pendulum2d, IntegratorSimpleStep<Pendulum2d>>::config cfg;
+		cfg.dT_integrator = integratorTimestep;
+		cfg.dT_inputSequence = systemTimestep;
+		cfg.tSimulation = simulationTime; 
+		cfg.x0 = {0,0,0.25,0};
+		pSimulator = new Simulator<Pendulum2d, IntegratorSimpleStep<Pendulum2d>>(pPendulum, cfg);
+		pSimulator->simulate(resvec, tout);	
+		std::vector<double>* state = pSimulator->getStateVector(1);
+		plotData(*tout, *state);	
+		int n = (*resvec).size();
+		//pPendulum->setInputSequence(inputVector);
         //pIntegrator = new IntegratorSimpleStep<Pendulum2d>(x0, integratorTimestep);
         //pIntegrator->integrate(10.0, resvec);
+		//TODO : free memory 
     }
 }
 
@@ -289,5 +325,5 @@ void MainWindow::on_buttonStartSimulation_clicked()
     }
     */
     
-    plotData();
+    //plotData();
 }
