@@ -27,6 +27,14 @@
 #include "mainwindow.h"
 #include <iostream>
 
+/**
+ * @brief Main GUI function
+ *
+ * @param argc
+ * @param argv[]
+ *
+ * @return 
+ */
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)

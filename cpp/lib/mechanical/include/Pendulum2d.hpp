@@ -25,7 +25,8 @@ class Pendulum2d : protected Physics, public SystemType {
   virtual ~Pendulum2d();
 
   void dfdt(const TState &x, TState &res, const double u = 0, const double t = 0) const;
-
+  void getZeroInput(TInput& u) const;
+  
   void print() const;
   void printParameters() const;
 
@@ -33,6 +34,8 @@ class Pendulum2d : protected Physics, public SystemType {
   double ePot(const TState x) const;
   double eKin(const TState x) const;
   double getTotalMass() const;
+  
+  const static TInput zeroInput;
 
   private:
   double m, M, L;

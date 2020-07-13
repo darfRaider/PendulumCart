@@ -57,37 +57,8 @@ void Simulator<TMechanicalModel, Integrator>::setInputSequence(TInputSequence* i
 
 template<typename TMechanicalModel, typename Integrator>
 void Simulator<TMechanicalModel, Integrator>::simulate(std::vector<TState>* res){
-  // Invalid cases, return
-  if((inputSequence == 0 && cfg.tSimulation == UNASSIGNED) || 
-	  cfg.dT_integrator == UNASSIGNED)
-	return;
-
-
-  // TODO: feed in dfdt in new Integrator 
   integrator = new Integrator(sys, cfg.x0, cfg.dT_integrator);
-  auto F = [&](const TState& x, TState& res, const double t){
-	sys->dfdt(x, res, t);
-  };
-  //integrator = new Integrator(cfg.x0, cfg.dT_integrator, &F);
-  
-  // No input sequence defined simulate form t=(0,tSimulation)
-  if(inputSequence == 0){
-	std::cout << "No input sequence selected" << std::endl;	
-	integrator->integrate(cfg.tSimulation, res);
-	return;
-  }
-  
-  // No sim end time defined simulate from t=(0,inputSequence.size()*dT_inputSequence) 
-  else if(cfg.tSimulation == UNASSIGNED){
-	// TODO
-	return; 
-  }
-
-  // Input sequence and simTime defined, simulate from t = (0, tSimulation)
-  else {
-	// TODO
-  }
-
+  integrator->integrate(0, cfg.tSimulation, res);
   delete integrator;  
 }
 

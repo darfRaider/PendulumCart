@@ -10,36 +10,67 @@
 #include <iostream>
 #include <boost/numeric/odeint.hpp>
 
+/**
+ * @brief Interface for integrator implementation
+ *
+ * @tparam TMechanicalModel Type of mechanical system.
+ */
 template<typename TMechanicalModel>
 class Integrator {
   public:
   typedef typename TMechanicalModel::TState TState;
   typedef typename TMechanicalModel::TInput TInput;
   typedef typename TMechanicalModel::TSystem TSystem; 
-  
-  virtual void integrate(const double tMax, 
-						 std::vector<TState> *vec) = 0;
-  
+
+  /**
+   * @brief Integration without input.
+   *
+   * @param t1 lower integration bound
+   * @param t2 upper integration bound
+   * @param vec pointer to vector that stores results
+   */
   virtual void integrate(const double t1, 
 						 const double t2, 
-						std::vector<TState> *vec) = 0;
-  
-  virtual void integrate(const double tMax, 
-						 const std::vector<TInput> *input, 
-						 const double Tsampling, 
 						 std::vector<TState> *vec) = 0;
-  
-  virtual void integrate(const double t1,
+
+  virtual void integrate(const double t1, 
 						 const double t2, 
-						 const std::vector<TInput> *input, 
-						 const double Tsampling, 
-						 std::vector<TState> *vec) = 0;
-  
+						 std::vector<TState> *vec,
+						 std::vector<TInput> *input,
+						 double Tsampling) = 0;
+
   void setInitialCondition(TState x0); 
   
+  void setInputSequence(std::vector<TInput>* input, double Tsampling);
+  void getInput(double t, TInput& input);
+  bool hasInputSequence(); 
+
   TState x0; 
   const TSystem* sys;
+  const static int UNASSIGNED = -1;
+  
+  private:
+  int N_inputs = UNASSIGNED; 
+  double Tsampling = UNASSIGNED;
+  std::vector<TInput>* input = NULL;
 };
+
+template<typename TMechanicalModel>
+void Integrator<TMechanicalModel>::setInputSequence(std::vector<TInput>* input, double Tsampling){
+ this->input = input;
+ this->Tsampling = Tsampling; 
+ this->N_inputs = (*input).size();
+}
+
+template<typename TMechanicalModel>
+void Integrator<TMechanicalModel>::getInput(double t, TInput& u){
+  int index = t/Tsampling;
+  if(index >= this->N_inputs){
+	this->sys->getZeroInput(u);	
+	return;	
+  }
+  u = (*input)[index];
+}
 
 template<typename TMechanicalModel>
 void Integrator<TMechanicalModel>::setInitialCondition(TState x0){

@@ -8,6 +8,8 @@
 #include "Pendulum2d.hpp"
 #include <iostream>
 
+const Pendulum2d::TInput Pendulum2d::zeroInput = 0;
+
 Pendulum2d::Pendulum2d(const double m, const double M, const double L):
   m(m),
   M(M),
@@ -25,15 +27,9 @@ void Pendulum2d::dfdt(const TState &x, TState &res, const double u, const double
              GRAVITY*m*sin(x[2]) + u*cos(x[2]))/(L*(M*pow(sin(x[2]),2) + m));
 }
 
-/*
-void Pendulum2d::setInputSequence(std::vector<TInput>* seq){
-  this->inputSequence = *seq;
+void Pendulum2d::getZeroInput(TInput& u) const {
+  u = zeroInput;
 }
-
-double Pendulum2d::getEndTime() const{
-  return inputSequence.size()*Ts;
-}
-*/
 
 void Pendulum2d::print() const {
   std::cout << "m = " << m << ", M = " << M << ", L = " << L << std::endl;
