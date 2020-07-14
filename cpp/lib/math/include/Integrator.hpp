@@ -17,11 +17,11 @@
  */
 template<typename TMechanicalModel>
 class Integrator {
-  public:
   typedef typename TMechanicalModel::TState TState;
   typedef typename TMechanicalModel::TInput TInput;
   typedef typename TMechanicalModel::TSystem TSystem; 
 
+  public:
   /**
    * @brief Integration without input.
    *

@@ -16,7 +16,15 @@ class Physics {
   Physics();
   virtual ~Physics();
  protected:
-  const double GRAVITY = 9.81;
+  /**
+   * @brief Acceleration at earth surface \f$(\frac{m}{s^2})\f$
+   */
+  const static double GRAVITY;
+
+  /**
+   * @brief Gravitational constant \f$(\frac{m^3}{kg\cdot s^2})\f$
+   */
+  const static double G_CONSTANT;
 };
 
 #endif /* INCLUDE_PHYSICS_HPP_ */

@@ -1,0 +1,5 @@
+rm -rf html
+doxygen Doxyfile
+cd latex
+make
+cd ..
