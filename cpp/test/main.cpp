@@ -2,8 +2,15 @@
 #include "IntegratorSimpleStep.hpp"
 #include "Pendulum2d.hpp"
 #include "Simulator.hpp"
+#include "stdio.h"
 
-
+TEST(ConsoleTest, coloredText){
+  printf("\x1B[31mRed normal text\033[0m\n");
+  printf("\x1B[1;92mBright green bold text\033[0m\n");
+			  // bg,fg
+  printf("\033[1;102;90mBright green background, black bold text\033[0m\n");
+// https://stackoverflow.com/questions/4053837/colorizing-text-in-the-console-with-c
+}
 
 TEST(SimulatorTest, instanciating){
   typedef Pendulum2d TSelectedSystem;
@@ -36,27 +43,3 @@ int main(int argc, char* argv[]){
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
-
-
-
-  /*
-TEST(IntegratorSimpleStep, zeroInput){
-  std::vector<Pendulum2d::TInput> input;
-  for(int i = 0; i < 100; i++){
-	input.push_back(0);
-  }
-  Pendulum2d* p = new Pendulum2d(1,2,3,0.05);
-//  p->setInputSequence(&input);
-  Pendulum2d::TState x0 = {0,0,0,0};
-  p->setInitialCondition(x0);
-  std::vector<Pendulum2d::TState>* res = new std::vector<Pendulum2d::TState>;
-  Integrator<Pendulum2d::TState>* integrator = 
-	new IntegratorSimpleStep<Pendulum2d::TState>(x0,0.00132535);
-  integrator->integrate(res);
- 
-  int nMax = res->size(); 
-  for(int i = 0; i < 4; i++){
-	EXPECT_EQ((*res)[nMax-1][i],0);
-  }
-}
-*/
