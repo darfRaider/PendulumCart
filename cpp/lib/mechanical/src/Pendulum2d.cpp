@@ -9,6 +9,11 @@
 #include <iostream>
 
 const Pendulum2d::TInput Pendulum2d::zeroInput = 0;
+const std::string UNITS[Pendulum2d::Nstates] = {
+  "Cart Position (m)",
+  "Cart Veclocity (m/s)",
+  "Pendulum Angle (rad)",
+  "Pendulum Velocity (rad/s)"};
 
 Pendulum2d::Pendulum2d(const double m, const double M, const double L):
   m(m),
@@ -20,6 +25,7 @@ Pendulum2d::Pendulum2d(const double m, const double M, const double L):
 Pendulum2d::~Pendulum2d() { }
 
 void Pendulum2d::dfdt(const TState &x, TState &res, const double t, const double u) const {
+  // TODO: evaluate sin(x[2]), pow(sin(x[2],2), sin(2*x[2]) once
   res[0] = x[1];
   res[1] = ((M*GRAVITY*sin(2*x[2]))/2.0 + M*L*pow(x[3],2)*sin(x[2]) + u)/(M*pow(sin(x[2]),2) + m);
   res[2] = x[3];
@@ -37,6 +43,19 @@ void Pendulum2d::print() const {
 
 void Pendulum2d::printParameters() const {
 
+}
+
+
+std::string Pendulum2d::getStateUnit(const int i) const {
+  return UNITS[i]; 
+}
+
+int Pendulum2d::getNstates() const {
+  return Nstates;
+}
+
+int Pendulum2d::getNinputs() const {
+  return Ninputs;
 }
 
 double Pendulum2d::sumE(const TState x) const {

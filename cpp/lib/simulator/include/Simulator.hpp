@@ -44,8 +44,6 @@ Simulator<TMechanicalModel, Integrator>::Simulator(TSystem* sys, config& cfg) : 
 
 template<typename TMechanicalModel, typename Integrator>
 Simulator<TMechanicalModel, Integrator>::~Simulator() {
-  if(integrator != 0)
-	delete integrator;
 }
 
 template<typename TMechanicalModel, typename Integrator>

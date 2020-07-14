@@ -69,7 +69,8 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
   void setupRealtimeDataDemo(QCustomPlot *customPlot);
-  void plotData(std::vector<double>& x, std::vector<double>& y);
+  void plotData(int i, std::vector<double>& x, std::vector<double>& y,
+                const std::string xLabel = "", const std::string yLabel = "");
 
 private slots:
   void realtimeDataSlot();

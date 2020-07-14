@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  setGeometry(250, 250, 800, 500); // (hPos, vPos, width, height)
+ // setGeometry(250, 250, 800, 500); // (hPos, vPos, width, height)
   setupRealtimeDataDemo(ui->customPlot);
   Pendulum2d p(10, 10, 1);
   Pendulum2d::TState x0 = {1,1,1,1};
@@ -65,6 +65,11 @@ MainWindow::MainWindow(QWidget *parent) :
   for(int i = 0; i < N_TEST_FIELDS; i++){ // Start with valid choice
       MainWindow::entriesValidityTest[i] = true;
   }
+
+  // Set some system related stuff
+  //const int Nstates = pPendulum->Nstates;
+  int Nstates = Pendulum2d::Nstates;
+  ui->plotStateNr->setMaximum(Nstates-1);
 }
 
 MainWindow::~MainWindow()
@@ -152,9 +157,9 @@ void MainWindow::realtimeDataSlot()
   }
 }
 
-void MainWindow::plotData(std::vector<double>& x, std::vector<double>& y)
+void MainWindow::plotData(int graphID, std::vector<double>& x, std::vector<double>& y, const std::string xLabel, const std::string yLabel)
 {
-  ui->customPlot->graph(0)->data()->clear(); 
+  ui->customPlot->graph(graphID)->data()->clear();
   double xMin, xMax, yMin, yMax;
   xMin = std::numeric_limits<double>::max();
   xMax = std::numeric_limits<double>::min();
@@ -163,7 +168,7 @@ void MainWindow::plotData(std::vector<double>& x, std::vector<double>& y)
    
   int N = x.size();
   for(int i = 0; i < N; i++){
-	ui->customPlot->graph(0)->addData(x[i],y[i]);
+    ui->customPlot->graph(graphID)->addData(x[i],y[i]);
 	if(x[i] < xMin)
 	  xMin = x[i];
 	if(x[i] > xMax)
@@ -174,50 +179,16 @@ void MainWindow::plotData(std::vector<double>& x, std::vector<double>& y)
 	  yMax = y[i];
   }
 
+
+  QString xl = QString::fromUtf8(xLabel.c_str());
+  QString yl = QString::fromUtf8(yLabel.c_str());
+
   ui->customPlot->xAxis->setRange(xMin, xMax, Qt::AlignLeft);
   ui->customPlot->yAxis->setRange(yMin, yMax);
-  ui->customPlot->replot();
- //   ui->customPlot->replot();
-  /*
-  static QTime time(QTime::currentTime());
-  // calculate two new data points:
-  double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
-  static int frameCount = 0;
-  static double lastPointKey = 0;
-  //std::cout << key  << std::endl;
-  //std::cout << Qt::PreciseTimer << std::endl;
-  if (key-lastPointKey > 0.002 || frameCount == 0) // at most add point every 2 ms
-  {
-    // add data to lines:
-    ui->customPlot->graph(0)->addData(key, qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
-    ui->customPlot->graph(1)->addData(key, qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-    // rescale value (vertical) axis to fit the current data:
-    */// ui->customPlot->graph(0)->rescaleValueAxis(true);  
-     //    ui->customPlot->xAxis->setRange(0, 8, Qt::AlignRight);
-         /*
-    //ui->customPlot->graph(1)->rescaleValueAxis(true);
-    lastPointKey = key;
-  }
-  // make key axis range scroll with the data (at a constant range size of 8):
-  ui->customPlot->xAxis->setRange(key, 8, Qt::AlignRight);
-                                                            
+  ui->customPlot->xAxis->setLabel(xl);
+  ui->customPlot->yAxis->setLabel(yl);
   ui->customPlot->replot();
 
-  // calculate frames per second:
-  static double lastFpsKey;
-
-  ++frameCount;
-  if (key-lastFpsKey > 2) // average fps over 2 seconds
-  {
-    ui->statusBar->showMessage(
-          QString("%1 FPS, Total Data points: %2")
-          .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
-          .arg(ui->customPlot->graph(0)->data()->size()+ui->customPlot->graph(1)->data()->size())
-          , 0);
-    lastFpsKey = key;
-    frameCount = 0;
-  }
-  */
 }
 
 /*
@@ -242,6 +213,7 @@ void MainWindow::on_buttonIntegrate_clicked()
         ui->statusBar->showMessage("Integration failed",5000);
     }
     else {
+        ui->statusBar->showMessage("Integrating...");
         Pendulum2d::TInput zero = 0;
         std::vector<Pendulum2d::TInput>* inputVector = new std::vector<Pendulum2d::TInput>;
         for(int i = 0; i < 100; i++){
@@ -254,13 +226,15 @@ void MainWindow::on_buttonIntegrate_clicked()
         double m = ui->inputMassCart->text().toDouble();
         double L = ui->inputLengthPendulum->text().toDouble();
 
-		// TODO: use time from gui
-		double simulationTime = 10; 
-
         double systemTimestep = ui->inputSimulationTimestep->text().toDouble();
+        double simulationTime = ui->inputSimulationTime->text().toDouble();
         double integratorTimestep = ui->inputIntegratorTimestep->text().toDouble();
 
+        int stateToPlot = ui->plotStateNr->value();
+
         pPendulum = new Pendulum2d(m,M,L);
+
+
 		Simulator<Pendulum2d, IntegratorSimpleStep<Pendulum2d>>::config cfg;
 		cfg.dT_integrator = integratorTimestep;
 		cfg.dT_inputSequence = systemTimestep;
@@ -268,16 +242,19 @@ void MainWindow::on_buttonIntegrate_clicked()
 		cfg.x0 = {0,0,0.25,0};
 		pSimulator = new Simulator<Pendulum2d, IntegratorSimpleStep<Pendulum2d>>(pPendulum, cfg);
 		pSimulator->simulate(resvec, tout);	
-		std::vector<double>* state = pSimulator->getStateVector(1);
-		plotData(*tout, *state);	
+        std::vector<double>* state = pSimulator->getStateVector(stateToPlot);
+        plotData(1, *tout, *state, "Time (s)", pPendulum->getStateUnit(stateToPlot));
 		int n = (*resvec).size();
 		delete resvec;
 		delete tout;
-		//pPendulum->setInputSequence(inputVector);
+        delete pPendulum;
+        delete pSimulator;
+        //pPendulum->setInputSequence(inputVector);
         //pIntegrator = new IntegratorSimpleStep<Pendulum2d>(x0, integratorTimestep);
         //pIntegrator->integrate(10.0, resvec);
 		//TODO : free memory 
     }
+    ui->statusBar->showMessage("Finished...",5000);
 }
 
 void MainWindow::on_inputMassCart_textEdited(const QString &arg1)

@@ -1,5 +1,6 @@
 #ifndef SYSTEM_HPP
 #define SYSTEM_HPP
+#include <string>
 
 template <typename StateType, typename InputType>
 class System {
@@ -19,8 +20,12 @@ class System {
   
   virtual double getTotalMass() const = 0;
   
+  virtual std::string getStateUnit(const int i) const = 0;
   virtual void printParameters() const = 0;
   virtual void print() const = 0;
+
+  virtual int getNstates() const = 0;
+  virtual int getNinputs() const = 0;
 };
 
 #endif

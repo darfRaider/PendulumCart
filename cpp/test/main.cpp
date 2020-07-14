@@ -22,6 +22,7 @@ TEST(SimulatorTest, instanciating){
   typedef typename TSimulator::config TConfig; 
   
   Pendulum2d* p = new Pendulum2d(1000,2,3);  
+  System<TState, TInput>* sys = p; 
   TConfig cfg;  
   TState res;
   TState x0 = {0,0,0.25,0};
