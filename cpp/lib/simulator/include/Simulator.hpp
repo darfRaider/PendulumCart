@@ -6,9 +6,8 @@ template<typename TMechanicalModel, typename TIntegrator>
 class Simulator {
 
  public:
-  typedef typename TMechanicalModel::System TSystem;
-  typedef typename TSystem::TState TState;
-  typedef typename TSystem::TInput TInput;
+  typedef typename TMechanicalModel::TState TState;
+  typedef typename TMechanicalModel::TInput TInput;
   typedef typename std::vector<TInput> TInputSequence;
    
   const static int UNASSIGNED = -1;
@@ -20,7 +19,7 @@ class Simulator {
 	TState x0;
   };	
   
-  Simulator(TSystem* sys, config& cfg);
+  Simulator(TMechanicalModel* sys, config& cfg);
   ~Simulator();
   void setInputSequence(TInputSequence* inputSequence, double Ts);
   std::vector<double>* getStateVector(int stateNr); 
@@ -29,7 +28,7 @@ private:
   
   config cfg;
 
-  const TSystem* sys;
+  const TMechanicalModel* sys;
   TIntegrator* integrator = 0;
   TInputSequence* inputSequence = 0;
   double Ts_input;
@@ -39,7 +38,7 @@ private:
 // Public functions implementation
 
 template<typename TMechanicalModel, typename Integrator>
-Simulator<TMechanicalModel, Integrator>::Simulator(TSystem* sys, config& cfg) : sys(sys), cfg(cfg) {
+Simulator<TMechanicalModel, Integrator>::Simulator(TMechanicalModel* sys, config& cfg) : sys(sys), cfg(cfg) {
 }
 
 template<typename TMechanicalModel, typename Integrator>

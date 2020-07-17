@@ -15,10 +15,9 @@ class IntegratorSimpleStep : public Integrator<TMechanicalSystem> {
   
   typedef typename TMechanicalSystem::TState TState;
   typedef typename TMechanicalSystem::TInput TInput;
-  typedef typename TMechanicalSystem::System TSystem; 
  
  public:
-  IntegratorSimpleStep(const TSystem* sys, TState x0, const double timestep);
+  IntegratorSimpleStep(const TMechanicalSystem* sys, TState x0, const double timestep);
  
   virtual ~IntegratorSimpleStep();
   
@@ -41,7 +40,7 @@ class IntegratorSimpleStep : public Integrator<TMechanicalSystem> {
 
 template <typename TMechanicalSystem>
 IntegratorSimpleStep<TMechanicalSystem>::
-IntegratorSimpleStep(const TSystem* sys, TState x0, const double timestep) { 
+IntegratorSimpleStep(const TMechanicalSystem* sys, TState x0, const double timestep) { 
   this->sys = sys;
   this->x0 = x0;
   this->timestep = timestep;

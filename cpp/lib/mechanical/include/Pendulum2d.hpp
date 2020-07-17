@@ -11,19 +11,27 @@
 #include "Physics.hpp"
 #include "System.hpp"
 
-// Define State and Input representation
+/**
+ * @brief Datatype used for state representation.
+ * 
+ * Bla bla bla some more stuff.
+ */
 typedef std::vector<double> StateType;
+
+
+/**
+ * @brief Datatype used for input representation.
+ *
+ * The input is a force in \f$(N)\f$ acting on the cart in horizontal direction.
+ */
 typedef double InputType;
 
-typedef System<StateType,InputType> SystemType;
-
-class Pendulum2d : protected Physics, public SystemType {
+class Pendulum2d : protected Physics, public System<StateType, InputType> {
 
  public:
   const static int Nstates = 4;
   const static int Ninputs = 1;
   
-  typedef SystemType TSystem;
   Pendulum2d(const double m, const double M, const double L);
   virtual ~Pendulum2d();
 

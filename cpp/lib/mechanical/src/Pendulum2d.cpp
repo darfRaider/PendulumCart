@@ -41,11 +41,6 @@ void Pendulum2d::print() const {
   std::cout << "m = " << m << ", M = " << M << ", L = " << L << std::endl;
 }
 
-void Pendulum2d::printParameters() const {
-
-}
-
-
 std::string Pendulum2d::getStateUnit(const int i) const {
   return UNITS[i]; 
 }

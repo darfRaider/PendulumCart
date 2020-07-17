@@ -9,7 +9,6 @@
 #define INCLUDE_INTEGRATOR_HPP_
 #include <iostream>
 #include <boost/numeric/odeint.hpp>
-
 /**
  * @brief Interface for integrator implementation
  *
@@ -19,7 +18,6 @@ template<typename TMechanicalModel>
 class Integrator {
   typedef typename TMechanicalModel::TState TState;
   typedef typename TMechanicalModel::TInput TInput;
-  typedef typename TMechanicalModel::TSystem TSystem; 
 
   public:
   /**
@@ -48,7 +46,7 @@ class Integrator {
   bool hasInputSequence(); 
 
   TState x0; 
-  const TSystem* sys;
+  const TMechanicalModel* sys;
   const static int UNASSIGNED = -1;
   
   private:
