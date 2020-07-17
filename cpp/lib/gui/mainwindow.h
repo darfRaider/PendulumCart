@@ -107,7 +107,6 @@ private:
 
   Pendulum2d* pPendulum;
   Simulator<Pendulum2d, IntegratorSimpleStep<Pendulum2d>>* pSimulator;
-  //  Integrator<Pendulum2d> * pIntegrator;
 };
 
 #endif // MAINWINDOW_H
