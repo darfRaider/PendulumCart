@@ -40,7 +40,7 @@ class Pendulum2d : protected Physics, public System<StateType, InputType> {
   
   void print() const;
   void printParameters() const;
-  std::string getStateUnit(const int i) const;
+  static std::string getStateUnit(const int i);
 
   double sumE(const TState x) const;
   double ePot(const TState x) const;

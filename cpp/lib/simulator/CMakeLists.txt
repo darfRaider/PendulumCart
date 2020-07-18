@@ -1,5 +1,5 @@
 include_directories(include)
 #find_package(Qt5Widgets)                                                                                 
 add_library(simulator INTERFACE)
-#			src/Simulator.cpp)
+  #			src/Simulator.cpp)
 #target_link_libraries(simulator math mechanical)

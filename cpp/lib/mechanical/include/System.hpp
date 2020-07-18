@@ -27,7 +27,6 @@ class System {
   virtual double getTotalMass() const = 0;
   virtual void getZeroInput(TInput& u) const = 0;
   
-  virtual std::string getStateUnit(const int i) const = 0;
   virtual void print() const = 0;
 
   virtual int getNstates() const = 0;

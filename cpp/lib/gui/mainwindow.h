@@ -73,11 +73,15 @@ public:
                 const std::string xLabel = "", const std::string yLabel = "");
 
 private slots:
+  QString str2qstr(std::string s);
+
+  double getMax(std::vector<double>& vec);
+
+  double getMin(std::vector<double>& vec);
+
   void realtimeDataSlot();
   
   void startSimulationPushedSlot();
-
-  void on_buttonIntegrate_clicked();
 
   void on_inputMassCart_textEdited(const QString &arg1);
 
@@ -93,12 +97,21 @@ private slots:
 
   void on_buttonStartSimulation_clicked();
 
+  void on_inputInputType_currentIndexChanged(int index);
+
+  void on_plotStateNr_valueChanged(int arg1);
+
+  void on_systemStates_currentRowChanged(int currentRow);
+
 private:
+  typedef Simulator<Pendulum2d, IntegratorSimpleStep<Pendulum2d>> TSimulator;
   Ui::MainWindow *ui;
   QString demoName;
   QTimer dataTimer;
   QCPItemTracer *itemDemoPhaseTracer;
   int currentDemoIndex;
+
+  //void drawRect(QCustomPlot* plt);
 
   // Variables to check validity
   static bool isRunning;
@@ -106,7 +119,11 @@ private:
 
 
   Pendulum2d* pPendulum;
-  Simulator<Pendulum2d, IntegratorSimpleStep<Pendulum2d>>* pSimulator;
+  TSimulator* pSimulator;
+  std::vector<Pendulum2d::TState>* res;
+  std::vector<Pendulum2d::TInput>* input;
+  std::vector<double>* tout;
+  bool hasResult = false;
 };
 
 #endif // MAINWINDOW_H

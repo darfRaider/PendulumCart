@@ -22,7 +22,7 @@ class Simulator {
   Simulator(TMechanicalModel* sys, config& cfg);
   ~Simulator();
   void setInputSequence(TInputSequence* inputSequence, double Ts);
-  std::vector<double>* getStateVector(int stateNr); 
+  static std::vector<double>* getStateVector(int stateNr, std::vector<TState>* res); 
   void simulate(std::vector<TState>* res, std::vector<double>* tout = NULL); 
 private:
   
@@ -45,17 +45,6 @@ template<typename TMechanicalModel, typename Integrator>
 Simulator<TMechanicalModel, Integrator>::~Simulator() {
 }
 
-template<typename TMechanicalModel, typename Integrator>
-std::vector<double>* Simulator<TMechanicalModel, Integrator>::getStateVector(int stateNr) {
-  std::vector<double>* state = new std::vector<double>();
-  if(result == NULL){
-	return state;
-  }
-  for(int i = 0; i < (*result).size(); i++){
-	(*state).push_back((*result)[i][stateNr]);
-  }
-  return state;
-}
 
 template<typename TMechanicalModel, typename Integrator>
 void Simulator<TMechanicalModel, Integrator>::setInputSequence(TInputSequence* inputSequence, double Ts){
@@ -76,4 +65,15 @@ void Simulator<TMechanicalModel, Integrator>::simulate(std::vector<TState>* res,
   delete integrator;  
 }
 
+template<typename TMechanicalModel, typename Integrator>
+std::vector<double>* Simulator<TMechanicalModel, Integrator>::getStateVector(int stateNr, std::vector<TState>* res) {
+  std::vector<double>* state = new std::vector<double>();
+  if(res == NULL){
+	return state;
+  }
+  for(int i = 0; i < (*res).size(); i++){
+	(*state).push_back((*res)[i][stateNr]);
+  }
+  return state;
+}
 #endif
